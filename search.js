@@ -93,7 +93,7 @@ function app(opts) {
       limit: 10,
       templates: {
         header: getHeader('Category'),
-        item:  '<a href="javascript:void(0);" class="facet-item {{#isRefined}}active{{/isRefined}}"><span class="facet-name"><i class="fa fa-angle-right"></i> {{name}}</span class="facet-name"><span class="ais-hierarchical-menu--count">{{count}}</span></a>' // eslint-disable-line
+        item: '<a href="javascript:void(0);" class="facet-item {{#isRefined}}active{{/isRefined}}"><span class="facet-name"><i class="fa fa-angle-right"></i> {{name}}</span class="facet-name"><span class="ais-hierarchical-menu--count">{{count}}</span></a>' // eslint-disable-line
       },
     })
   );
@@ -211,6 +211,47 @@ function app(opts) {
 
   search.start();
 }
+
+
+// ---------------------
+//
+//  Custom widget
+//
+// ---------------------
+
+const customMenuRenderFn = function(renderParams, isFirstRendering) {
+  // widgetParams contains all the original options used to instantiate the widget on the page.
+  const container = renderParams.widgetParams.containerNode;
+  const title = renderParams.widgetParams.title || 'My first custom menu widget';
+
+  if (isFirstRendering) {
+    // replace `document.body` with the container provided by the user
+    // and also the new title
+    $(container).append(
+      '<h1>' + title + '</h1>' +
+      '<select></select>'
+    );
+
+    const refine = renderParams.refine;
+    $(container).find('select').on('click', function(event) {
+      refine(event.target.value);
+    });
+  }
+
+  const items = renderParams.items;
+  const optionsHTML = items.map(item => {
+    return (
+      `<option value="${item.value}"${item.isRefined ? ' selected' : ''}>${item.label}(${item.count})</option>`
+    );
+  });
+  $(container).find('select').html(optionsHTML);
+}
+
+const dropdownMenu = instantsearch.connectors.connectMenu(customMenuRenderFn);
+
+console.log('CONNECTORS', instantsearch.connectors);
+
+
 
 // ---------------------
 //
