@@ -231,8 +231,6 @@ function app(opts) {
   search.start();
 }
 
-
-
 // ---------------------
 //
 //  Helper functions
@@ -265,15 +263,15 @@ function getStarsHTML(rating, maxRating) {
 function customMenuRenderFn(renderParams, isFirstRendering) {
   // widgetParams contains all the original options used to instantiate the widget on the page.
   const container = renderParams.widgetParams.container;
+  const placeholder = renderParams.widgetParams.placeholder;
 
   if (isFirstRendering) {
     $(container).append(
-      '<input list="suggestions" /><datalist id="suggestions"></datalist>'
+      `<input list="suggestions" placeholder="${placeholder}"/><datalist id="suggestions"></datalist>`
     );
 
-    const refine = renderParams.refine;
-    $(container).find('select').on('click', function (event) {
-      refine(event.target.value);
+    $(container).find('datalist').on('click', function (event) {
+      console.log('clicked', event.target.value);
     });
   }
 
@@ -281,7 +279,7 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
   const items = ['test', '1', '2', '3']
   const optionsHTML = items.map(item => {
     return (
-      `<option value="${item}")</option>`
+      `<option value="${item}"></option>`
     );
   });
   $(container).find('datalist').html(optionsHTML);
