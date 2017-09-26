@@ -26,7 +26,6 @@ function app(opts) {
   // ---------------------
 
   // --- Replace with custom ---
-
   // search.addWidget(
   //   instantsearch.widgets.searchBox({
   //     container: '#search-input',
@@ -219,62 +218,15 @@ function app(opts) {
   //
   // ---------------------
 
-  // const customMenuRenderFn = function (renderParams, isFirstRendering) {
-  //   // widgetParams contains all the original options used to instantiate the widget on the page.
-  //   const container = renderParams.widgetParams.container;
-
-  //   if (isFirstRendering) {
-  //     $(container).append(
-  //       '<select></select>'
-  //     );
-
-  //     const refine = renderParams.refine;
-  //     $(container).find('select').on('click', function (event) {
-  //       refine(event.target.value);
-  //     });
-  //   }
-
-  //   const items = renderParams.items;
-  //   const optionsHTML = items.map(item => {
-  //     return (
-  //       `<option value="${item.value}"${item.isRefined ? ' selected' : ''}>${item.label}(${item.count})</option>`
-  //     );
-  //   });
-  //   $(container).find('select').html(optionsHTML);
-  // }
-
-  // const keywordDropdown = instantsearch.connectors.connectSearchBox(customMenuRenderFn);
-
-
-  // console.log('CONNECTORS', instantsearch.connectors);
-
-  // const debounceFn = (query, search) => {
-  //   // Should these be at the global scope
-  //   var lastQueryUpdatedAt = 0;
-  //   var DEBOUNCE_DELAY = 600;
-  //   var debounceTimer = null;
-  //   var now = (new Date()).getTime();
-  //   if ((now - lastQueryUpdatedAt) < DEBOUNCE_DELAY) {
-  //     console.log("Clearing timeout");
-  //     clearTimeout(debounceTimer);
-  //   }
-
-  //   lastQueryUpdatedAt = now;
-  //   debounceTimer = setTimeout(function () { search(query); }, DEBOUNCE_DELAY);
-  //   console.log("Setting timeout", debounceTimer);
-  //   return false;
-  // }
-
-
-
-  // search.addWidget(
-  //   keywordDropdown({
-  //     // are container and containerNode interchangable here
-  //     container: '#search-input',
-  //     placeholder: 'Search for products by name, type, brand, ...',
-  //     queryHook: debounceFn
-  //   })
-  // );
+  const keywordDropdown = instantsearch.connectors.connectSearchBox(customMenuRenderFn);
+  search.addWidget(
+    keywordDropdown({
+      // are container and containerNode interchangable here?
+      container: '#search-input',
+      placeholder: 'Search for products by name, type, brand, ...',
+      queryHook: debounceFn
+    })
+  );
 
   search.start();
 }
@@ -308,4 +260,46 @@ function getStarsHTML(rating, maxRating) {
   }
 
   return html;
+}
+
+function customMenuRenderFn(renderParams, isFirstRendering) {
+  // widgetParams contains all the original options used to instantiate the widget on the page.
+  const container = renderParams.widgetParams.container;
+
+  if (isFirstRendering) {
+    $(container).append(
+      '<input list="suggestions" /><datalist id="suggestions"></datalist>'
+    );
+
+    const refine = renderParams.refine;
+    $(container).find('select').on('click', function (event) {
+      refine(event.target.value);
+    });
+  }
+
+  //const items = renderParams.items;
+  const items = ['test', '1', '2', '3']
+  const optionsHTML = items.map(item => {
+    return (
+      `<option value="${item}")</option>`
+    );
+  });
+  $(container).find('datalist').html(optionsHTML);
+}
+
+function debounceFn (query, search){
+  // Should these be at the global scope
+  var lastQueryUpdatedAt = 0;
+  var DEBOUNCE_DELAY = 600;
+  var debounceTimer = null;
+  var now = (new Date()).getTime();
+  if ((now - lastQueryUpdatedAt) < DEBOUNCE_DELAY) {
+    console.log("Clearing timeout");
+    clearTimeout(debounceTimer);
+  }
+
+  lastQueryUpdatedAt = now;
+  debounceTimer = setTimeout(function () { search(query); }, DEBOUNCE_DELAY);
+  console.log("Setting timeout", debounceTimer);
+  return false;
 }
