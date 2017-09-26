@@ -24,12 +24,15 @@ function app(opts) {
   //  Default widgets
   //
   // ---------------------
-  search.addWidget(
-    instantsearch.widgets.searchBox({
-      container: '#search-input',
-      placeholder: 'Search for products by name, type, brand, ...',
-    })
-  );
+
+  // --- Replace with custom ---
+
+  // search.addWidget(
+  //   instantsearch.widgets.searchBox({
+  //     container: '#search-input',
+  //     placeholder: 'Search for products by name, type, brand, ...',
+  //   })
+  // );
 
   search.addWidget(
     instantsearch.widgets.hits({
@@ -215,11 +218,11 @@ function app(opts) {
 
 // ---------------------
 //
-//  Custom widget
+//  Custom widget for Searchbox
 //
 // ---------------------
 
-const customMenuRenderFn = function(renderParams, isFirstRendering) {
+const customMenuRenderFn = function (renderParams, isFirstRendering) {
   // widgetParams contains all the original options used to instantiate the widget on the page.
   const container = renderParams.widgetParams.containerNode;
   const title = renderParams.widgetParams.title || 'My first custom menu widget';
@@ -233,7 +236,7 @@ const customMenuRenderFn = function(renderParams, isFirstRendering) {
     );
 
     const refine = renderParams.refine;
-    $(container).find('select').on('click', function(event) {
+    $(container).find('select').on('click', function (event) {
       refine(event.target.value);
     });
   }
@@ -247,11 +250,34 @@ const customMenuRenderFn = function(renderParams, isFirstRendering) {
   $(container).find('select').html(optionsHTML);
 }
 
-const dropdownMenu = instantsearch.connectors.connectMenu(customMenuRenderFn);
+const keywordDropdown = instantsearch.connectors.connectSearchBox(customMenuRenderFn);
+
 
 console.log('CONNECTORS', instantsearch.connectors);
+const lastQueryUpdatedAt = 0;
+const DEBOUNCE_DELAY = 600;
+const debounceTimer = null;
 
 
+search.addWidget(
+  keywordDropdown({
+    container: '#search-input',
+    placeholder: 'Search for products by name, type, brand, ...',
+    // Query hook from Alex's MindGeek Demo
+    queryHook: function (query, search) {
+      var now = (new Date()).getTime();
+      if ((now - lastQueryUpdatedAt) < DEBOUNCE_DELAY) {
+        console.log("Clearing timeout");
+        clearTimeout(debounceTimer);
+      }
+
+      lastQueryUpdatedAt = now;
+      debounceTimer = setTimeout(function () { search(query); }, DEBOUNCE_DELAY);
+      console.log("Setting timeout", debounceTimer);
+      return false;
+    }
+  })
+);
 
 // ---------------------
 //
