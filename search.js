@@ -77,7 +77,7 @@ function app(opts) {
   search.addWidget(
     instantsearch.widgets.pagination({
       container: '#pagination',
-      scrollTo: '#search-input',
+      scrollTo: '#aa-input-container',
     })
   );
 
@@ -226,7 +226,7 @@ function app(opts) {
   const keywordDropdown = instantsearch.connectors.connectSearchBox(customMenuRenderFn);
   search.addWidget(
     keywordDropdown({
-      container: '#search-input',
+      container: '#aa-input-container',
       placeholder: 'Search for products by name, type, brand, ...'
       //queryHook: debounceFn
     })
@@ -271,23 +271,24 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
 
   if (isFirstRendering) {
     $(container).append(
-      `<input type="search" id="search-input" placeholder="${placeholder}"/>`
+      `<input type="search" id="aa-search-input" class="aa-input-search" placeholder="${placeholder}"/>`
     );
-    autocomplete('#search-input',
-      { hint: false }, [{
-        source: autocomplete.sources.hits(index, { hitsPerPage: 5 }),
-        //value to be displayed in input control after user's suggestion selection
-        displayKey: 'name',
-        //hash of templates used when rendering dataset
-        templates: {
-          //'suggestion' templating function used to render a single suggestion
-          suggestion: function (suggestion, answer) {
-            console.log('SUGGESTION:', suggestion, 'ANSWER:', answer);
-            return '<span>' + suggestion._highlightResult.name.value + '</span>'
+    autocomplete('#aa-search-input',
+      { hint: false }, [
+        {
+          source: autocomplete.sources.hits(index, { hitsPerPage: 5 }),
+          //value to be displayed in input control after user's suggestion selection
+          displayKey: 'name',
+          //hash of templates used when rendering dataset
+          templates: {
+            //'suggestion' templating function used to render a single suggestion
+            suggestion: function (suggestion, answer) {
+              console.log('SUGGESTION:', suggestion, 'ANSWER:', answer);
+              return '<span>' + suggestion._highlightResult.name.value + '</span>'
+            }
           }
         }
-      }])
-      .on('autocomplete:selected', function (event, suggestion, dataset) {
+      ]).on('autocomplete:selected', function (event, suggestion, dataset) {
         console.log(suggestion, dataset);
         renderParams.refine(event.target.value);
       });
