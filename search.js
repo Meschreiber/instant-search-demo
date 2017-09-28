@@ -1,10 +1,13 @@
-/* global instantsearch */
+/* global instantsearch autocomplete */
 
-app({
-  appId: 'latency',
-  apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
-  indexName: 'instant_search'
-});
+
+const appId = '5NICTDJ5Q3';
+const apiKey = 'fe2708f4939640ae043e0a04008fbb10';
+const indexName = 'instant_search';
+const client = algoliasearch(appId, apiKey);
+const index = client.initIndex(indexName);
+
+app({ appId, apiKey, indexName });
 
 function app(opts) {
   // ---------------------
@@ -143,23 +146,26 @@ function app(opts) {
     })
   );
 
-  search.addWidget(
-    instantsearch.widgets.priceRanges({
-      container: '#price-range',
-      attributeName: 'price',
-      labels: {
-        currency: '$',
-        separator: 'to',
-        button: 'Apply',
-      },
-      templates: {
-        header: getHeader('Price range'),
-      },
-      collapsible: {
-        collapsed: true,
-      },
-    })
-  );
+  // Throwing error --> not sure why?
+
+
+  // search.addWidget(
+  //   instantsearch.widgets.priceRanges({
+  //     container: '#price-range',
+  //     attributeName: 'price',
+  //     labels: {
+  //       currency: '$',
+  //       separator: 'to',
+  //       button: 'Apply',
+  //     },
+  //     templates: {
+  //       header: getHeader('Price range'),
+  //     },
+  //     collapsible: {
+  //       collapsed: true,
+  //     },
+  //   })
+  // );
 
   search.addWidget(
     instantsearch.widgets.starRating({
@@ -211,7 +217,6 @@ function app(opts) {
     })
   );
 
-
   // ---------------------
   //
   //  Custom widget for Searchbox
@@ -221,10 +226,9 @@ function app(opts) {
   const keywordDropdown = instantsearch.connectors.connectSearchBox(customMenuRenderFn);
   search.addWidget(
     keywordDropdown({
-      // are container and containerNode interchangable here?
       container: '#search-input',
-      placeholder: 'Search for products by name, type, brand, ...',
-      queryHook: debounceFn
+      placeholder: 'Search for products by name, type, brand, ...'
+      //queryHook: debounceFn
     })
   );
 
@@ -267,25 +271,36 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
 
   if (isFirstRendering) {
     $(container).append(
-      `<input list="suggestions" placeholder="${placeholder}"/><datalist id="suggestions"></datalist>`
+      `<input type="search" id="search-input" placeholder="${placeholder}"/>`
     );
-
-    $(container).find('datalist').on('click', function (event) {
-      console.log('clicked', event.target.value);
-    });
+    autocomplete('#search-input',
+      { hint: false }, [{
+        source: autocomplete.sources.hits(index, { hitsPerPage: 5 }),
+        //value to be displayed in input control after user's suggestion selection
+        displayKey: 'name',
+        //hash of templates used when rendering dataset
+        templates: {
+          //'suggestion' templating function used to render a single suggestion
+          suggestion: function (suggestion, answer) {
+            console.log('SUGGESTION:', suggestion, 'ANSWER:', answer);
+            return '<span>' + suggestion._highlightResult.name.value + '</span>'
+          }
+        }
+      }])
+      .on('autocomplete:selected', function (event, suggestion, dataset) {
+        console.log(suggestion, dataset);
+        renderParams.refine(event.target.value);
+      });
   }
-
-  //const items = renderParams.items;
-  const items = ['test', '1', '2', '3']
-  const optionsHTML = items.map(item => {
-    return (
-      `<option value="${item}"></option>`
-    );
+  // should or should not be on isFirstRendering?
+  $(container).find('input').on('input', function (event) {
+    renderParams.refine(event.target.value);
   });
-  $(container).find('datalist').html(optionsHTML);
+
+
 }
 
-function debounceFn (query, search){
+function debounceFn(query, search) {
   // Should these be at the global scope
   var lastQueryUpdatedAt = 0;
   var DEBOUNCE_DELAY = 600;
