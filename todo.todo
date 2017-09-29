@@ -1,0 +1,4 @@
+- Fix CSS (drop down same width as input, price slider)
+- Horizontal categories for autocomplete
+- Create replicas
+- source: provide funtion have a cb that uses facet values 
