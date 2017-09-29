@@ -98,7 +98,7 @@ function app(opts) {
       limit: 10,
       templates: {
         header: getHeader('Category'),
-        item: '<a href="javascript:void(0);" class="facet-item {{#isRefined}}active{{/isRefined}}"><span class="facet-name"><i class="fa fa-angle-right"></i> {{name}}</span class="facet-name"><span class="ais-hierarchical-menu--count">{{count}}</span></a>' // eslint-disable-line
+        item: '<a href="javascript:void(0);" class="facet-item {{#isRefined}}active{{/isRefined}}"><span class="facet-name"><i class="fa fa-angle-right"></i> {{value}}</span class="facet-name"><span class="ais-hierarchical-menu--count">{{count}}</span></a>' // eslint-disable-line
       },
     })
   );
@@ -146,26 +146,24 @@ function app(opts) {
     })
   );
 
-  // Throwing error --> not sure why?
-
-
-  // search.addWidget(
-  //   instantsearch.widgets.priceRanges({
-  //     container: '#price-range',
-  //     attributeName: 'price',
-  //     labels: {
-  //       currency: '$',
-  //       separator: 'to',
-  //       button: 'Apply',
-  //     },
-  //     templates: {
-  //       header: getHeader('Price range'),
-  //     },
-  //     collapsible: {
-  //       collapsed: true,
-  //     },
-  //   })
-  // );
+  
+  search.addWidget(
+    instantsearch.widgets.priceRanges({
+      container: '#price-range',
+      attributeName: 'price',
+      labels: {
+        currency: '$',
+        separator: 'to',
+        button: 'Apply',
+      },
+      templates: {
+        header: getHeader('Price range'),
+      },
+      collapsible: {
+        collapsed: true,
+      },
+    })
+  );
 
   search.addWidget(
     instantsearch.widgets.starRating({
@@ -275,45 +273,46 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
     );
     autocomplete('#aa-search-input',
       { hint: false }, [
-        {
-          source: autocomplete.sources.hits(index, { hitsPerPage: 5 }),
+        // this is an array -- can have multiple indices to search
+        { 
+          source: autocomplete.sources.hits(index, { hitsPerPage: 10, restrictSearchableAttributes: ['name']}), 
           //value to be displayed in input control after user's suggestion selection
           displayKey: 'name',
           //hash of templates used when rendering dataset
           templates: {
             //'suggestion' templating function used to render a single suggestion
             suggestion: function (suggestion, answer) {
-              console.log('SUGGESTION:', suggestion, 'ANSWER:', answer);
               return '<span>' + suggestion._highlightResult.name.value + '</span>'
             }
           }
         }
       ]).on('autocomplete:selected', function (event, suggestion, dataset) {
-        console.log(suggestion, dataset);
         renderParams.refine(event.target.value);
       });
+
+      // This is the regular instantSearch update of results
+      $(container).find('input').on('input', function (event) {
+        setTimeout(function() {
+          renderParams.refine(event.target.value);
+        }, 700);    
+      });
   }
-  // should or should not be on isFirstRendering?
-  $(container).find('input').on('input', function (event) {
-    renderParams.refine(event.target.value);
-  });
-
-
 }
 
-function debounceFn(query, search) {
-  // Should these be at the global scope
-  var lastQueryUpdatedAt = 0;
-  var DEBOUNCE_DELAY = 600;
-  var debounceTimer = null;
-  var now = (new Date()).getTime();
-  if ((now - lastQueryUpdatedAt) < DEBOUNCE_DELAY) {
-    console.log("Clearing timeout");
-    clearTimeout(debounceTimer);
-  }
 
-  lastQueryUpdatedAt = now;
-  debounceTimer = setTimeout(function () { search(query); }, DEBOUNCE_DELAY);
-  console.log("Setting timeout", debounceTimer);
-  return false;
-}
+
+// function debounceFn(query, search) {
+//   var lastQueryUpdatedAt = 0;
+//   var DEBOUNCE_DELAY = 600;
+//   var debounceTimer = null;
+//   var now = (new Date()).getTime();
+//   if ((now - lastQueryUpdatedAt) < DEBOUNCE_DELAY) {
+//     console.log("Clearing timeout");
+//     clearTimeout(debounceTimer);
+//   }
+
+//   lastQueryUpdatedAt = now;
+//   debounceTimer = setTimeout(function () { search(query); }, DEBOUNCE_DELAY);
+//   console.log("Setting timeout", debounceTimer);
+//   return false;
+// }
