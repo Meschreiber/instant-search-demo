@@ -1,6 +1,6 @@
 /* global instantsearch autocomplete */
 
-
+// ----- PERSONAL APP ID -----
 // const appId = '5NICTDJ5Q3';
 // const apiKey = 'fe2708f4939640ae043e0a04008fbb10';
 
@@ -10,9 +10,6 @@ const apiKey = '6be0576ff61c053d5f9a3225e2a90f76';
 const indexName = 'instant_search';
 const client = algoliasearch(appId, apiKey);
 const index = client.initIndex(indexName);
-
-
-latency
 
 app({ appId, apiKey, indexName });
 
@@ -93,6 +90,7 @@ function app(opts) {
   //  Filtering widgets
   //
   // ---------------------
+
   search.addWidget(
     instantsearch.widgets.hierarchicalMenu({
       container: '#hierarchical-categories',
@@ -265,7 +263,6 @@ function getStarsHTML(rating, maxRating) {
   for (let i = 0; i < maxRating; ++i) {
     html += `<span class="ais-star-rating--star${i < rating ? '' : '__empty'}"></span>`;
   }
-
   return html;
 }
 
@@ -276,7 +273,7 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
 
   if (isFirstRendering) {
     $(container).append(
-      `<input type="search" id="aa-search-input" class="aa-input-search" placeholder="${placeholder}"/>`
+      `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
     );
     autocomplete('#aa-search-input',
       { hint: false }, [

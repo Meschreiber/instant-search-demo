@@ -525,7 +525,7 @@ footer a:hover {
   color: #999;
 }
 .algolia-autocomplete .aa-dropdown-menu {
-  width: 100%;
+  width: 50%;
   background-color: #fff;
   border: 1px solid #999;
   border-top: none;
@@ -576,7 +576,7 @@ header img {
   color: #999;
 }
 
-/* #aa-search-input-icon {
+#aa-search-input-icon {
   position: relative;
 }
 #aa-search-input-icon:before {
@@ -592,4 +592,4 @@ header img {
 #aa-search-input-icon.empty:before {
   cursor: pointer;
   background-image: url(img/delete_icon.png);
-} */
+}
