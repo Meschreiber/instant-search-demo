@@ -1,4 +1,6 @@
-- Fix CSS (drop down same width as input, price slider)
+- Fix CSS:
+    ✅ Dropdown same width as input
+    - Fix price range slider
 - Horizontal categories for autocomplete
-- Create replicas
-- source: provide funtion have a cb that uses facet values 
+- Create replicas 🤔
+- source: provide function have a cb that uses facet values 🤔
