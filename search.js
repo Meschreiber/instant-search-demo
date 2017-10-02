@@ -11,9 +11,6 @@ const indexName = 'instant_search';
 const client = algoliasearch(appId, apiKey);
 const index = client.initIndex(indexName);
 
-
-latency
-
 app({ appId, apiKey, indexName });
 
 function app(opts) {
