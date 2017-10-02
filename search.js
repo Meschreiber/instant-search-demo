@@ -1,11 +1,18 @@
 /* global instantsearch autocomplete */
 
 
-const appId = '5NICTDJ5Q3';
-const apiKey = 'fe2708f4939640ae043e0a04008fbb10';
+// const appId = '5NICTDJ5Q3';
+// const apiKey = 'fe2708f4939640ae043e0a04008fbb10';
+
+
+const appId = 'latency';
+const apiKey = '6be0576ff61c053d5f9a3225e2a90f76';
 const indexName = 'instant_search';
 const client = algoliasearch(appId, apiKey);
 const index = client.initIndex(indexName);
+
+
+latency
 
 app({ appId, apiKey, indexName });
 
