@@ -273,7 +273,7 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
 
   if (isFirstRendering) {
     $(container).append(
-      `<input type="search" id="aa-search-input" class="aa-input-search" placeholder="${placeholder}"/>`
+      `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
     );
     autocomplete('#aa-search-input',
       { hint: false }, [
