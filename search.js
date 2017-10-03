@@ -150,7 +150,7 @@ function app(opts) {
     })
   );
 
-  
+
   search.addWidget(
     instantsearch.widgets.priceRanges({
       container: '#price-range',
@@ -275,32 +275,50 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
     $(container).append(
       `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
     );
-    console.log('AUTOCOMPLETE', autocomplete.sources)
+
+    const brandSource = autocomplete.sources.hits(index, { hitsPerPage: 5, restrictSearchableAttributes: ['brand'] });
+
     autocomplete('#aa-search-input',
       { hint: false }, [
-        // this is an array -- can have multiple indices to search
-        { 
-          source: autocomplete.sources.hits(index, { hitsPerPage: 10, restrictSearchableAttributes: ['name']}), 
-          //value to be displayed in input control after user's suggestion selection
+        {
+          source: autocomplete.sources.hits(index, { hitsPerPage: 5, restrictSearchableAttributes: ['name'] }),
           displayKey: 'name',
-          //hash of templates used when rendering dataset
           templates: {
-            //'suggestion' templating function used to render a single suggestion
+            header: '<div class="aa-suggestions-category">Products</div>',
             suggestion: function (suggestion, answer) {
+              console.log('NAME', suggestion);
               return '<span>' + suggestion._highlightResult.name.value + '</span>'
             }
           }
+        },
+        {
+          source: (query, cb) => {
+            brandSource(query, (suggestions) => {
+              const brands = suggestions.map(suggestion => suggestion.brand);
+              const uniqueBrands = brands.filter((item, pos) => brands.indexOf(item) === pos);
+              cb(uniqueBrands);
+            })
+          },
+          displayKey: 'name',
+          templates: {
+            header: '<div class="aa-suggestions-category">Brands</div>',
+            suggestion: function (suggestion, answer) {
+              console.log('BRAND', suggestion);
+              return '<span>' + suggestion._highlightResult.brand.value + '</span>'
+            }
+          }
         }
+
       ]).on('autocomplete:selected', function (event, suggestion, dataset) {
         renderParams.refine(event.target.value);
       });
 
-      // This is the regular instantSearch update of results
-      $(container).find('input').on('input', function (event) {
-        setTimeout(function() {
-          renderParams.refine(event.target.value);
-        }, 700);    
-      });
+    // This is the regular instantSearch update of results
+    $(container).find('input').on('input', function (event) {
+      setTimeout(function () {
+        renderParams.refine(event.target.value);
+      }, 700);
+    });
   }
 }
 
