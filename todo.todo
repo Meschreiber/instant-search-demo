@@ -2,7 +2,7 @@
     ✅ Dropdown same width as input
     - Fix price range slider
         - Can't figure out why the div is not being rendered with the same children as in the instant demo
-        - css and js is exactly the same...
+         (css and js is exactly the same?)
 - Horizontal categories for autocomplete
-- ✅ Create replicas -- just ended up hooking it back to the latency data set, but did checkout how replicas are made
 - source: provide function have a cb that uses facet values 🤔
+- ✅ Create replicas -- just ended up hooking it back to the latency data set, but did checkout how replicas are made

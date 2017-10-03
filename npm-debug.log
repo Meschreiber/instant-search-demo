@@ -1,5 +1,5 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'start' ]
 2 info using npm@3.10.10
 3 info using node@v6.11.3
 4 verbose stack Error: missing script: start
@@ -15,7 +15,7 @@
 4 verbose stack     at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:444:12)
 5 verbose cwd /Users/maria/Desktop/Demos/instant-search-demo
 6 error Darwin 16.7.0
-7 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "start"
+7 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "start"
 8 error node v6.11.3
 9 error npm  v3.10.10
 10 error missing script: start

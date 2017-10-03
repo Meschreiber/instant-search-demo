@@ -528,7 +528,6 @@ footer a:hover {
   color: #999;
 }
 .algolia-autocomplete .aa-dropdown-menu {
-  width: 100%;
   background-color: #fff;
   border: 1px solid #999;
   border-top: none;

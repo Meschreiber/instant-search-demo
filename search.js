@@ -275,6 +275,7 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
     $(container).append(
       `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
     );
+    console.log('AUTOCOMPLETE', autocomplete.sources)
     autocomplete('#aa-search-input',
       { hint: false }, [
         // this is an array -- can have multiple indices to search
@@ -303,20 +304,3 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
   }
 }
 
-
-
-// function debounceFn(query, search) {
-//   var lastQueryUpdatedAt = 0;
-//   var DEBOUNCE_DELAY = 600;
-//   var debounceTimer = null;
-//   var now = (new Date()).getTime();
-//   if ((now - lastQueryUpdatedAt) < DEBOUNCE_DELAY) {
-//     console.log("Clearing timeout");
-//     clearTimeout(debounceTimer);
-//   }
-
-//   lastQueryUpdatedAt = now;
-//   debounceTimer = setTimeout(function () { search(query); }, DEBOUNCE_DELAY);
-//   console.log("Setting timeout", debounceTimer);
-//   return false;
-// }
