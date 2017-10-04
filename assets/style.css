@@ -551,6 +551,17 @@ footer a:hover {
   padding: 6px 12px;
 }
 
+.aa-facet-name {
+  display: inline-block;
+  width: 50%;
+}
+
+.aa-facet-count {
+  display: inline-block;
+  width: 50%;
+  text-align: right;
+}
+
 /* INPUT */
 
 header {

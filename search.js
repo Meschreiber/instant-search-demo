@@ -290,7 +290,6 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
           templates: {
             header: '<div class="aa-suggestions-category">Products</div>',
             suggestion: function (suggestion, answer) {
-              console.log('PRODUCT', suggestion);
               return '<span>' + suggestion._highlightResult.name.value + '</span>'
             }
           }
@@ -309,12 +308,11 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
           templates: {
             header: '<div class="aa-suggestions-category">Brands</div>',
             suggestion: function (facet) {
-              console.log('FACET', facet)
-              return '<span>' + facet.highlighted + '</span>'
+              console.log('FACET', facet);
+              return '<div><span class="aa-facet-name">' + facet.highlighted + '</span><span class="aa-facet-count">' + facet.count + '</span></div>';
             }
           }
         }
-
       ]).on('autocomplete:selected', function (event, suggestion, dataset) {
         renderParams.refine(event.target.value);
       });
