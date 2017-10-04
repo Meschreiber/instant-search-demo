@@ -379,6 +379,18 @@ a.clear-all:hover {
   position: relative;
 }
 
+.ais-range-slider .rheostat-horizontal .rheostat-progress {
+  background-color: #ed5565;
+  position: absolute;
+  height: 6px;
+  top: 1px;
+}
+
+.ais-body.ais-range-slider--body {
+  left: 0;
+  position: relative;
+}
+
 /* Star Rating */
 .ais-star-rating--star,
 .ais-star-rating--star__empty {
