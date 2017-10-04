@@ -276,35 +276,41 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
       `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
     );
 
-    const brandSource = autocomplete.sources.hits(index, { hitsPerPage: 5, restrictSearchableAttributes: ['brand'] });
-
     autocomplete('#aa-search-input',
-      { hint: false }, [
+      { hint: false,
+        templates: {
+          dropdownMenu:
+            '<div class="aa-dataset-product"></div>' +
+            '<div class="aa-dataset-brand"></div>',
+        }
+      }, [
         {
-          source: autocomplete.sources.hits(index, { hitsPerPage: 5, restrictSearchableAttributes: ['name'] }),
+          source: autocomplete.sources.hits(index, { hitsPerPage: 10, restrictSearchableAttributes: ['name'] }),
           displayKey: 'name',
           templates: {
             header: '<div class="aa-suggestions-category">Products</div>',
             suggestion: function (suggestion, answer) {
-              console.log('NAME', suggestion);
+              console.log('PRODUCT', suggestion);
               return '<span>' + suggestion._highlightResult.name.value + '</span>'
             }
           }
         },
         {
           source: (query, cb) => {
-            brandSource(query, (suggestions) => {
-              const brands = suggestions.map(suggestion => suggestion.brand);
-              const uniqueBrands = brands.filter((item, pos) => brands.indexOf(item) === pos);
-              cb(uniqueBrands);
+            index.searchForFacetValues({
+              facetName: 'brand',
+              facetQuery: query
+            })
+            .then(res => {
+              cb(res.facetHits);
             })
           },
-          displayKey: 'name',
+          displayKey: 'brand',
           templates: {
             header: '<div class="aa-suggestions-category">Brands</div>',
-            suggestion: function (suggestion, answer) {
-              console.log('BRAND', suggestion);
-              return '<span>' + suggestion._highlightResult.brand.value + '</span>'
+            suggestion: function (facet) {
+              console.log('FACET', facet)
+              return '<span>' + facet.highlighted + '</span>'
             }
           }
         }

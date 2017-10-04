@@ -5,4 +5,5 @@
          (css and js is exactly the same?)
 - Horizontal categories for autocomplete
 - source: provide function have a cb that uses facet values 🤔
+    -- Did that, but wouldn't it be better to have a separate index?
 - ✅ Create replicas -- just ended up hooking it back to the latency data set, but did checkout how replicas are made
