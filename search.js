@@ -150,7 +150,6 @@ function app(opts) {
     })
   );
 
-
   search.addWidget(
     instantsearch.widgets.priceRanges({
       container: '#price-range',
@@ -230,7 +229,6 @@ function app(opts) {
     keywordDropdown({
       container: '#aa-input-container',
       placeholder: 'Search for products by name, type, brand, ...'
-      //queryHook: debounceFn
     })
   );
 
@@ -267,7 +265,6 @@ function getStarsHTML(rating, maxRating) {
 }
 
 function customMenuRenderFn(renderParams, isFirstRendering) {
-  // widgetParams contains all the original options used to instantiate the widget on the page.
   const container = renderParams.widgetParams.container;
   const placeholder = renderParams.widgetParams.placeholder;
 
@@ -293,28 +290,37 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
               return '<span>' + suggestion._highlightResult.name.value + '</span>'
             }
           }
-        },
-        {
-          source: (query, cb) => {
-            index.searchForFacetValues({
-              facetName: 'brand',
-              facetQuery: query
-            })
-            .then(res => {
-              cb(res.facetHits);
-            })
-          },
-          displayKey: 'brand',
-          templates: {
-            header: '<div class="aa-suggestions-category">Brands</div>',
-            suggestion: function (facet) {
-              console.log('FACET', facet);
-              return '<div><span class="aa-facet-name">' + facet.highlighted + '</span><span class="aa-facet-count">' + facet.count + '</span></div>';
-            }
-          }
         }
+        // , Unnecessary because we already have the brand search on the side
+        // {
+        //   source: (query, cb) => {
+        //     index.searchForFacetValues({
+        //       facetName: 'brand',
+        //       facetQuery: query
+        //     })
+        //     .then(res => {
+        //       cb(res.facetHits);
+        //     })
+        //   },
+        //   displayKey: 'brand',
+        //   templates: {
+        //     header: '<div class="aa-suggestions-category">Brands</div>',
+        //     suggestion: function (facet) {
+        //       return '<div><span class="aa-facet-name">' + facet.highlighted + '</span><span class="aa-facet-count">' + facet.count + '</span></div>';
+        //     }
+        //   }
+        // }
       ]).on('autocomplete:selected', function (event, suggestion, dataset) {
-        renderParams.refine(event.target.value);
+        if(suggestion.name){
+          renderParams.refine(event.target.value);
+          // Brands have the .value attribute
+        }
+        // else {
+        //   renderParams.clear();
+        //   index.search({
+        //     filters: `brand:"${event.target}"`
+        //   });
+        // }
       });
 
     // This is the regular instantSearch update of results
