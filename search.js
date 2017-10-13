@@ -285,11 +285,15 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
         // }
       }, [
         {
-          source: autocomplete.sources.hits(suggestionsIndex, { hitsPerPage: 10, restrictSearchableAttributes: ['query'] }),
+          source: autocomplete.sources.hits(suggestionsIndex, { hitsPerPage: 5, restrictSearchableAttributes: ['query'] }),
           displayKey: 'name',
           templates: {
             // header: '<div class="aa-suggestions-category">Products</div>',
             suggestion: function (suggestion, answer) {
+              const dropdownHeight = $('.aa-dropdown-menu').height();
+               console.log('height', dropdownHeight);
+              // $('#right-column').css("padding-top", `${dropdownHeight}px`);
+              $('#right-column').css("padding-top", "170px");
               return '<span>' + suggestion._highlightResult.query.value + '</span>'
             }
           }
@@ -314,15 +318,17 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
         //   }
         // }
       ]).on('autocomplete:selected', function (event, suggestion, dataset) {
+        $('#aa-search-input').val(suggestion.query);
         renderParams.refine(suggestion.query);
+        $('#right-column').css("padding-top", "0");
       });
 
     // This is the regular instantSearch update of results
     $(container).find('input').on('input', function (event) {
-      console.log('current input', event.target.value);
+      if(event.target.value === '') $('#right-column').css("padding-top", "0");
       setTimeout(function () {
         renderParams.refine(event.target.value);
-      }, 700);
+      }, 600);
     });
   }
 }
