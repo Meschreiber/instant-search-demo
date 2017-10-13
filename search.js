@@ -275,13 +275,14 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
     );
 
     autocomplete('#aa-search-input',
-      { hint: false,
-        templates: {
-          dropdownMenu:
-          // These are being created, but the hits are going into other divs --> aa-dataset-1, aa-dataset-2
-            '<div class="aa-dataset-product"></div>' +
-            '<div class="aa-dataset-brand"></div>',
-        }
+      {
+        hint: false,
+        // templates: {
+        //   dropdownMenu:
+        //   // These are being created, but the hits are going into other divs --> aa-dataset-1, aa-dataset-2
+        //   '<div class="aa-dataset-product"></div>' +
+        //   '<div class="aa-dataset-brand"></div>',
+        // }
       }, [
         {
           source: autocomplete.sources.hits(suggestionsIndex, { hitsPerPage: 10, restrictSearchableAttributes: ['query'] }),
@@ -313,16 +314,7 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
         //   }
         // }
       ]).on('autocomplete:selected', function (event, suggestion, dataset) {
-        if(suggestion.name){
-          renderParams.refine(event.target.value);
-          // Brands have the .value attribute
-        }
-        // else {
-        //   renderParams.clear();
-        //   index.search({
-        //     filters: `brand:"${event.target}"`
-        //   });
-        // }
+        renderParams.refine(suggestion.query);
       });
 
     // This is the regular instantSearch update of results

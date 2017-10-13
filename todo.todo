@@ -1,13 +1,11 @@
 - Fix CSS:
     ✅ Dropdown same width as input
-    - Fix price range slider
+    ✅ Fix price range slider
         - Can't figure out why the div is not being rendered with the same children as in the instant demo
-         (css and js is exactly the same?)
-- Horizontal categories for autocomplete
+         (css and js is exactly the same?) --> something about the different version of instantsearch being imported?
+❎ Horizontal categories for autocomplete --> Decided against it to just go with query suggesionts
 - source: provide function have a cb that uses facet values 🤔
-    -- Did that, but wouldn't it be better to have a separate index?
+    -- Did that, but wouldn't it be better to have a separate index? --> yes
+
 - ✅ Create replicas -- just ended up hooking it back to the latency data set, but did checkout how replicas are made
-
-
-- first result should be visible below the drop Dropdown (styling, e.g. padding)
-- use query suggestions as a separate index
+- ✅ use query suggestions as a separate index
