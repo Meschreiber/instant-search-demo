@@ -319,6 +319,7 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
 
     // This is the regular instantSearch update of results
     $(container).find('input').on('input', function (event) {
+      console.log('current input', event.target.value);
       setTimeout(function () {
         renderParams.refine(event.target.value);
       }, 700);

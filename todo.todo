@@ -9,3 +9,4 @@
 
 - ✅ Create replicas -- just ended up hooking it back to the latency data set, but did checkout how replicas are made
 - ✅ use query suggestions as a separate index
+- Update input with suggestion
