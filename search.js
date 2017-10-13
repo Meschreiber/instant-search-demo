@@ -276,47 +276,21 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
 
     autocomplete('#aa-search-input',
       {
-        hint: false,
-        // templates: {
-        //   dropdownMenu:
-        //   // These are being created, but the hits are going into other divs --> aa-dataset-1, aa-dataset-2
-        //   '<div class="aa-dataset-product"></div>' +
-        //   '<div class="aa-dataset-brand"></div>',
-        // }
+        hint: false
       }, [
         {
           source: autocomplete.sources.hits(suggestionsIndex, { hitsPerPage: 5, restrictSearchableAttributes: ['query'] }),
           displayKey: 'name',
           templates: {
-            // header: '<div class="aa-suggestions-category">Products</div>',
             suggestion: function (suggestion, answer) {
-              const dropdownHeight = $('.aa-dropdown-menu').height();
-               console.log('height', dropdownHeight);
-              // $('#right-column').css("padding-top", `${dropdownHeight}px`);
+              const dropdownHeight = $('.aa-dropdown-menu');
+              const current = +$('#right-column').css("padding-top").slice(0, -2);
+              console.log('current', `${current+25}px`);
               $('#right-column').css("padding-top", "170px");
               return '<span>' + suggestion._highlightResult.query.value + '</span>'
             }
           }
         }
-        // , Unnecessary because we already have the brand search on the side
-        // {
-        //   source: (query, cb) => {
-        //     index.searchForFacetValues({
-        //       facetName: 'brand',
-        //       facetQuery: query
-        //     })
-        //     .then(res => {
-        //       cb(res.facetHits);
-        //     })
-        //   },
-        //   displayKey: 'brand',
-        //   templates: {
-        //     header: '<div class="aa-suggestions-category">Brands</div>',
-        //     suggestion: function (facet) {
-        //       return '<div><span class="aa-facet-name">' + facet.highlighted + '</span><span class="aa-facet-count">' + facet.count + '</span></div>';
-        //     }
-        //   }
-        // }
       ]).on('autocomplete:selected', function (event, suggestion, dataset) {
         $('#aa-search-input').val(suggestion.query);
         renderParams.refine(suggestion.query);
@@ -325,7 +299,7 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
 
     // This is the regular instantSearch update of results
     $(container).find('input').on('input', function (event) {
-      if(event.target.value === '') $('#right-column').css("padding-top", "0");
+      if (event.target.value === '') $('#right-column').css("padding-top", "0");
       setTimeout(function () {
         renderParams.refine(event.target.value);
       }, 600);
