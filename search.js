@@ -10,6 +10,7 @@ const apiKey = '6be0576ff61c053d5f9a3225e2a90f76';
 const indexName = 'instant_search';
 const client = algoliasearch(appId, apiKey);
 const index = client.initIndex(indexName);
+const suggestionsIndex = client.initIndex('instantsearch_query_suggestions');
 
 app({ appId, apiKey, indexName });
 
@@ -277,17 +278,18 @@ function customMenuRenderFn(renderParams, isFirstRendering) {
       { hint: false,
         templates: {
           dropdownMenu:
+          // These are being created, but the hits are going into other divs --> aa-dataset-1, aa-dataset-2
             '<div class="aa-dataset-product"></div>' +
             '<div class="aa-dataset-brand"></div>',
         }
       }, [
         {
-          source: autocomplete.sources.hits(index, { hitsPerPage: 10, restrictSearchableAttributes: ['name'] }),
+          source: autocomplete.sources.hits(suggestionsIndex, { hitsPerPage: 10, restrictSearchableAttributes: ['query'] }),
           displayKey: 'name',
           templates: {
-            header: '<div class="aa-suggestions-category">Products</div>',
+            // header: '<div class="aa-suggestions-category">Products</div>',
             suggestion: function (suggestion, answer) {
-              return '<span>' + suggestion._highlightResult.name.value + '</span>'
+              return '<span>' + suggestion._highlightResult.query.value + '</span>'
             }
           }
         }
