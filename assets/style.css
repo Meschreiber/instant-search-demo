@@ -511,15 +511,16 @@ footer a:hover {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   fill: #e4e4e4; }
+
 .aa-dropdown-menu {
   background-color: #fff;
   border: 1px solid rgba(228, 228, 228, 0.6);
   width: 74%;
   margin-left: 26%;
-  padding: 10px 0 6px;
   border: none;
-  margin-top: 10px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
+
 .aa-suggestion {
   padding: 12px;
   cursor: pointer;
