@@ -10,3 +10,7 @@
 - ✅ Create replicas -- just ended up hooking it back to the latency data set, but did checkout how replicas are made
 - ✅ use query suggestions as a separate index
 - Update input with suggestion
+
+- Fix padding on Dropdown
+- Add query rules + banner -- for particular products? (e.g. apple, samsung landing pages)
+- Create tutorial for custom widget + autocomplete, and for query rules
