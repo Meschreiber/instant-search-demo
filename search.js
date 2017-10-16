@@ -1,25 +1,20 @@
 /* global instantsearch autocomplete */
 
-
-// const appId = '5NICTDJ5Q3';
-// const apiKey = 'fe2708f4939640ae043e0a04008fbb10';
-
-
-const appId = 'latency';
-const apiKey = '6be0576ff61c053d5f9a3225e2a90f76';
+const appId = '5NICTDJ5Q3';
+const apiKey = 'fe2708f4939640ae043e0a04008fbb10';
+const latencyAppId = 'latency';
+const latencyApiKey = '6be0576ff61c053d5f9a3225e2a90f76';
 const indexName = 'instant_search';
+
 const client = algoliasearch(appId, apiKey);
+const latencyClient = algoliasearch(latencyAppId, latencyApiKey);
+
 const index = client.initIndex(indexName);
-const suggestionsIndex = client.initIndex('instantsearch_query_suggestions');
+const suggestionsIndex = latencyClient.initIndex('instantsearch_query_suggestions');
 
 app({ appId, apiKey, indexName });
 
 function app(opts) {
-  // ---------------------
-  //
-  //  Init
-  //
-  // ---------------------
   const search = instantsearch({
     appId: opts.appId,
     apiKey: opts.apiKey,
@@ -225,14 +220,50 @@ function app(opts) {
   //
   // ---------------------
 
+  function customMenuRenderFn(renderParams, isFirstRendering) {
+    const { container, placeholder, timeoutLength } = renderParams.widgetParams;
+  
+    if (isFirstRendering) {
+      $(container).append(
+        `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
+      );
+  
+      autocomplete('#aa-search-input',
+        {
+          hint: false
+        }, [
+          {
+            source: autocomplete.sources.hits(suggestionsIndex, { hitsPerPage: 5, restrictSearchableAttributes: ['query'] }),
+            displayKey: 'name',
+            templates: {
+              suggestion: function (suggestion, answer) {
+                return '<span>' + suggestion._highlightResult.query.value + '</span>'
+              }
+            }
+          }
+        ]).on('autocomplete:selected', function (event, suggestion, dataset) {
+          $('#aa-search-input').val(suggestion.query);
+          renderParams.refine(suggestion.query);
+        });
+  
+      // This is the regular instantSearch update of results
+      $(container).find('input').on('input', function (event) {
+        setTimeout(function () {
+          renderParams.refine(event.target.value);
+        }, timeoutLength);
+      });
+    }
+  }
+
   const keywordDropdown = instantsearch.connectors.connectSearchBox(customMenuRenderFn);
+
   search.addWidget(
     keywordDropdown({
       container: '#aa-input-container',
-      placeholder: 'Search for products by name, type, brand, ...'
+      placeholder: 'Search for products by name, type, brand, ...',
+      timeoutLength: 600
     })
   );
-
   search.start();
 }
 
@@ -265,39 +296,5 @@ function getStarsHTML(rating, maxRating) {
   return html;
 }
 
-function customMenuRenderFn(renderParams, isFirstRendering) {
-  const container = renderParams.widgetParams.container;
-  const placeholder = renderParams.widgetParams.placeholder;
 
-  if (isFirstRendering) {
-    $(container).append(
-      `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
-    );
-
-    autocomplete('#aa-search-input',
-      {
-        hint: false
-      }, [
-        {
-          source: autocomplete.sources.hits(suggestionsIndex, { hitsPerPage: 5, restrictSearchableAttributes: ['query'] }),
-          displayKey: 'name',
-          templates: {
-            suggestion: function (suggestion, answer) {
-              return '<span>' + suggestion._highlightResult.query.value + '</span>'
-            }
-          }
-        }
-      ]).on('autocomplete:selected', function (event, suggestion, dataset) {
-        $('#aa-search-input').val(suggestion.query);
-        renderParams.refine(suggestion.query);
-      });
-
-    // This is the regular instantSearch update of results
-    $(container).find('input').on('input', function (event) {
-      setTimeout(function () {
-        renderParams.refine(event.target.value);
-      }, 600);
-    });
-  }
-}
 

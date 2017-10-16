@@ -10,7 +10,9 @@
 - ✅ use query suggestions as a separate index
 - ✅ Update input with suggestion
 
-- Fix padding on Dropdown
+- ✅ Fix padding on Dropdown
+- ✅ Make widget configurable with the timeout delay
 - Add query rules + banner -- for particular products? (e.g. apple, samsung landing pages)
-- make widget configurable with the timeout delay
+
+
 - Create tutorial for custom widget + autocomplete, and for query rules
