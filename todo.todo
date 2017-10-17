@@ -3,16 +3,23 @@
     ✅ Fix price range slider
         - Can't figure out why the div is not being rendered with the same children as in the instant demo
          (css and js is exactly the same?) --> something about the different version of instantsearch being imported?
-❎ Horizontal categories for autocomplete --> Decided against it to just go with query suggesionts
-- source: provide function have a cb that uses facet values 🤔
-    -- Did that, but wouldn't it be better to have a separate index? --> yes
-- ✅ Create replicas -- just ended up hooking it back to the latency data set, but did checkout how replicas are made
-- ✅ use query suggestions as a separate index
-- ✅ Update input with suggestion
-
-- ✅ Fix padding on Dropdown
+- ✅ Create replicas -- just ended up hooking it back to the latency data set, but did create replicas
+- ❎ Horizontal categories for autocomplete --> Decided against it to just go with query suggestions
+- ✅ Change the source: provide a function that has cb that uses searchForFacetValues() 
+    - Did that, but wouldn't it be better to have a separate index? 🤔 --> yes ✅
+- ✅ Use query suggestions as a separate index
+- ✅ Update input with selected suggestion
+- ✅ Fix padding on dropdown
 - ✅ Make widget configurable with the timeout delay
-- Add query rules + banner -- for particular products? (e.g. apple, samsung landing pages)
 
+- Add query rules + banner -- for particular products? (e.g. apple, samsung landing pages)
+    ✅ Read query rules docs and look at code for demo-query-rules https://github.com/algolia/demo-query-rules
+    - Select which query rules you would like to use for this data set
+        - 1) 'best' <product> --> filters for products w/ 5 stars
+        - 2) 'cheap' <product> --> sets price to a range of the lowest quartile of prices for that particular product (phone, headphones, tablets etc.) (Yeah, this one might be tricky...)
+        - 3) on 'smartphone' promote 'iphone' products (currently none show up) but also 'cellphones with plans', 'no-contract cellphone' -- maybe use distinct somehow so there is not just an endless stream of iphones?
+        - 4) on 'video games' query promote guitar hero, cuz why not? (and they don't carry smash brothers)
+        - 5) on 'free shipping' display a blinking annoying banner for 'free shipping' and filter results so only those with free shipping appear.
+    - Set query rules programmatically (dashboard doesn't seem to be working, and then there will be code to look at it in this repo)
 
 - Create tutorial for custom widget + autocomplete, and for query rules
