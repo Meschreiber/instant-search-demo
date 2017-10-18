@@ -65,7 +65,7 @@ var rules = [
             promote: [
                 { objectID: "9704115", "position": 0 }, 
                 { objectID: "9706113", "position": 1 },
-                { objectID: "9706114", "position": 2 }
+                { objectID: "9705114", "position": 2 }
             ]
         },
         description: 'Promote Guitar Hero games for "video games" query'
@@ -104,23 +104,23 @@ var rules = [
         },
         description: 'Display Apple and Samsung promotional banners'
     },
-    {
-        objectID: 'facet-test',
-        condition: {
-            pattern: '{facet:brand}',
-            anchoring: 'contains'
-        },
-        consequence: {
-            params: {
-                query: {
-                    remove: ['{facet:brand}']
-                }
-            },
-            automaticFacetFilters: ['brand']
+    // {
+    //     objectID: 'facet-test',
+    //     condition: {
+    //         pattern: '{facet:brand}',
+    //         anchoring: 'contains'
+    //     },
+    //     consequence: {
+    //         params: {
+    //             query: {
+    //                 remove: ['{facet:brand}']
+    //             }
+    //         },
+    //         automaticFacetFilters: ['brand']
 
-        },
-        description: 'Automatic Facet Filter on Brands'
-    }
+    //     },
+    //     description: 'Automatic Facet Filter on Brands'
+    // }
 ];
 
 index.batchRules(rules, { clearExistingRules: true, forwardToReplicas: true }, handleResponse);
