@@ -73,7 +73,7 @@ var rules = [
     {
         objectID: 'free-shipping',
         condition: {
-            pattern: 'free-shipping',
+            pattern: 'free shipping',
             anchoring: 'contains'
         },
         consequence: {
@@ -84,7 +84,7 @@ var rules = [
                 }
             },
             userData: {
-                free_ship_banner: "./assets/img/free_shipping_banner.jpg"
+                free_ship_banner: "free_shipping_banner.jpg"
             }
         },
         description: 'Filter for free-shipping and display banner'

@@ -610,20 +610,3 @@ header img {
   color: #999;
 }
 
-/* #aa-search-input-icon {
-  position: relative;
-}
-#aa-search-input-icon:before {
-  position: absolute;
-  right: 0;
-  bottom: 15px;
-  width: 20px;
-  height: 20px;
-  content: '';
-  cursor: default;
-  background: url(img/search_icon.png) no-repeat;
-}
-#aa-search-input-icon.empty:before {
-  cursor: pointer;
-  background-image: url(img/delete_icon.png);
-} */
