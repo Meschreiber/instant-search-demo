@@ -28,14 +28,6 @@ function app(opts) {
   //
   // ---------------------
 
-  // --- Replace with custom ---
-  // search.addWidget(
-  //   instantsearch.widgets.searchBox({
-  //     container: '#search-input',
-  //     placeholder: 'Search for products by name, type, brand, ...',
-  //   })
-  // );
-
   search.addWidget(
     instantsearch.widgets.hits({
       container: '#hits',
@@ -86,6 +78,7 @@ function app(opts) {
   //  Filtering widgets
   //
   // ---------------------
+
   search.addWidget(
     instantsearch.widgets.hierarchicalMenu({
       container: '#hierarchical-categories',
@@ -216,7 +209,7 @@ function app(opts) {
 
   // ---------------------
   //
-  //  Custom widget for Searchbox
+  //  Custom widget with autocomplete for Searchbox
   //
   // ---------------------
 
@@ -272,6 +265,7 @@ function app(opts) {
 //  Helper functions
 //
 // ---------------------
+
 function getTemplate(templateName) {
   return document.querySelector(`#${templateName}-template`).innerHTML;
 }
@@ -292,7 +286,6 @@ function getStarsHTML(rating, maxRating) {
   for (let i = 0; i < maxRating; ++i) {
     html += `<span class="ais-star-rating--star${i < rating ? '' : '__empty'}"></span>`;
   }
-
   return html;
 }
 
