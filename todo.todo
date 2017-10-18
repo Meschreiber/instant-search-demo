@@ -19,6 +19,7 @@
         - 2) on 'video games' query promote guitar hero, cuz why not? (and they don't carry smash brothers)
         - 3) on 'free shipping' display a blinking annoying banner for 'free shipping' and filter results so only those with free shipping appear.
         - 4) on 'smartphone' display banners for apple and samsung 
+        - 5) if a brand name is typed, filter on that and remove from query
     - Set query rules programmatically 
 
 - Create tutorial for custom widget + autocomplete, and for query rules

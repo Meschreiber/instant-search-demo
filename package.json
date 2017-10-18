@@ -21,5 +21,8 @@
     "eslint-config-airbnb": "^0.1.0",
     "eslint-config-algolia": "^4.0.0",
     "eslint-plugin-react": "^3.5.1"
+  },
+  "dependencies": {
+    "algoliasearch": "^3.24.5"
   }
 }
