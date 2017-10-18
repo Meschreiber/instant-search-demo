@@ -63,7 +63,7 @@ var rules = [
         },
         consequence: {
             promote: [
-                { objectID: "9704115", "position": 0 }, 
+                { objectID: "9704115", "position": 0 },
                 { objectID: "9706113", "position": 1 },
                 { objectID: "9705114", "position": 2 }
             ]
@@ -97,30 +97,29 @@ var rules = [
         },
         consequence: {
             userData: {
-                samsung_banner: "./assets/img/samsung_note.jpg",
-                apple_banner: "./assets/img/iphone.jpg"
+                samsung_banner: "samsung_note.jpg",
+                apple_banner: "iphone.jpg"
 
             }
         },
         description: 'Display Apple and Samsung promotional banners'
     },
-    // {
-    //     objectID: 'facet-test',
-    //     condition: {
-    //         pattern: '{facet:brand}',
-    //         anchoring: 'contains'
-    //     },
-    //     consequence: {
-    //         params: {
-    //             query: {
-    //                 remove: ['{facet:brand}']
-    //             }
-    //         },
-    //         automaticFacetFilters: ['brand']
-
-    //     },
-    //     description: 'Automatic Facet Filter on Brands'
-    // }
+    {
+        objectID: 'facet-test',
+        condition: {
+            pattern: '{facet:brand}',
+            anchoring: 'contains'
+        },
+        consequence: {
+            params: {
+                query: {
+                    remove: ['{facet:brand}']
+                },
+                automaticFacetFilters: ['brand']
+            }
+        },
+        description: 'Automatic Facet Filter on Brands'
+    }
 ];
 
 index.batchRules(rules, { clearExistingRules: true, forwardToReplicas: true }, handleResponse);
