@@ -14,12 +14,11 @@
 
 - Add query rules + banner -- for particular products? (e.g. apple, samsung landing pages)
     ✅ Read query rules docs and look at code for demo-query-rules https://github.com/algolia/demo-query-rules
-    - Select which query rules you would like to use for this data set
+    ✅ Select which query rules you would like to use for this data set
         - 1) 'best' <product> --> filters for products w/ 5 stars
-        - 2) 'cheap' <product> --> sets price to a range of the lowest quartile of prices for that particular product (phone, headphones, tablets etc.) (Yeah, this one might be tricky...)
-        - 3) on 'smartphone' promote 'iphone' products (currently none show up) but also 'cellphones with plans', 'no-contract cellphone' -- maybe use distinct somehow so there is not just an endless stream of iphones?
-        - 4) on 'video games' query promote guitar hero, cuz why not? (and they don't carry smash brothers)
-        - 5) on 'free shipping' display a blinking annoying banner for 'free shipping' and filter results so only those with free shipping appear.
-    - Set query rules programmatically (dashboard doesn't seem to be working, and then there will be code to look at it in this repo)
+        - 2) on 'video games' query promote guitar hero, cuz why not? (and they don't carry smash brothers)
+        - 3) on 'free shipping' display a blinking annoying banner for 'free shipping' and filter results so only those with free shipping appear.
+        - 4) on 'smartphone' display banners for apple and samsung 
+    - Set query rules programmatically 
 
 - Create tutorial for custom widget + autocomplete, and for query rules
