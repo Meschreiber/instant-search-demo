@@ -78,13 +78,13 @@ var rules = [
         },
         consequence: {
             params: {
-                filters: 'free-shipping:true',
+                filters: 'free_shipping:true',
                 query: {
-                    remove: ['free-shipping']
+                    remove: ['free shipping ']
                 }
             },
             userData: {
-                free_ship_banner: "free_shipping_banner.jpg"
+                free_ship_banner: "shp.jpg"
             }
         },
         description: 'Filter for free-shipping and display banner'
@@ -97,9 +97,8 @@ var rules = [
         },
         consequence: {
             userData: {
-                samsung_banner: "samsung_note.jpg",
-                apple_banner: "iphone.jpg"
-
+                samsung_banner: "sam.jpg",
+                apple_banner: "iph.jpg"
             }
         },
         description: 'Display Apple and Samsung promotional banners'
@@ -112,9 +111,6 @@ var rules = [
         },
         consequence: {
             params: {
-                query: {
-                    remove: ['{facet:brand}']
-                },
                 automaticFacetFilters: ['brand']
             }
         },
