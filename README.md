@@ -16,5 +16,5 @@ Just for fun! 😁
 5) If a brand name is typed, filter on that brand
 
 ### Known issues
--[ ] The dropdown covers up the first hits. Originally I added additional padding to have those display the drop-down but I was advised to leave it as is. 
+- [ ] The dropdown covers up the first hits. Originally I added additional padding to have those display the drop-down but I was advised to leave it as is. 
 
