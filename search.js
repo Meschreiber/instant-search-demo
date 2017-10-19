@@ -235,7 +235,7 @@ function app(opts) {
               break;
             case 'iph':
               options.helper.setQuery('iPhone 6 128GB').search()
-              $('#aa-search-input').val('iPhone 6');
+              $('#aa-search-input').val('iPhone 6 128GB');
               break;
             default:
               break;
