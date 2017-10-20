@@ -6,6 +6,7 @@ const latencyAppId = 'latency';
 const latencyApiKey = '6be0576ff61c053d5f9a3225e2a90f76';
 const indexName = 'instant_search';
 
+
 const client = algoliasearch(appId, apiKey);
 const latencyClient = algoliasearch(latencyAppId, latencyApiKey);
 
@@ -246,7 +247,7 @@ function app(opts) {
   });
 
   function customMenuRenderFn(renderParams, isFirstRendering) {
-    const { container, placeholder, timeoutLength } = renderParams.widgetParams;
+    const { container, placeholder, delayTime } = renderParams.widgetParams;
 
     if (isFirstRendering) {
       $(container).append(
@@ -273,9 +274,21 @@ function app(opts) {
 
       // This is the regular instantSearch update of results
       $(container).find('input').on('input', function (event) {
-        setTimeout(function () {
-          renderParams.refine(event.target.value);
-        }, timeoutLength);
+        var lastQueryUpdatedAt = 0;
+        var debounceTimer = null;
+        var now = (new Date()).getTime();
+        if ((now - lastQueryUpdatedAt) < delayTime) {
+          // console.log("Clearing timeout");
+          clearTimeout(debounceTimer);
+        }
+
+        lastQueryUpdatedAt = now;
+        debounceTimer = setTimeout(function () { renderParams.refine(event.target.value); }, delayTime);
+        // console.log("Setting timeout", debounceTimer);
+        return false;
+        // setTimeout(function () {
+        //   renderParams.refine(event.target.value);
+        // }, delayTime);
       });
     }
   }
@@ -286,7 +299,7 @@ function app(opts) {
     keywordDropdown({
       container: '#aa-input-container',
       placeholder: 'Search for products by name, type, brand, ...',
-      timeoutLength: 600
+      delayTime: 600
     })
   );
   search.start();
@@ -324,6 +337,21 @@ function getStarsHTML(rating, maxRating) {
     html += `<span class="ais-star-rating--star${i < rating ? '' : '__empty'}"></span>`;
   }
   return html;
+}
+
+function debounce(delayTime, query) {
+  var lastQueryUpdatedAt = 0;
+  var debounceTimer = null;
+  var now = (new Date()).getTime();
+  if ((now - lastQueryUpdatedAt) < delayTime) {
+    console.log("Clearing timeout");
+    clearTimeout(debounceTimer);
+  }
+
+  lastQueryUpdatedAt = now;
+  debounceTimer = setTimeout(function () { search(query); }, DEBOUNCE_DELAY);
+  console.log("Setting timeout", debounceTimer);
+  return false;
 }
 
 
