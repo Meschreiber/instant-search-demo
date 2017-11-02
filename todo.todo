@@ -31,6 +31,10 @@ Styling:
 - fake branding instead of 'instant search demo' (best buy knock off)
 - on autocomplete, include banners inside of dropdown (example query for 'smartphone')
 
+Features:
+- Time selection tool
+- Number of suggestions tool
+
 Bugs:
 - IS not checking the filter though the filter is selected through query rules (example query "apple")
 
