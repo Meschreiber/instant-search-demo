@@ -643,8 +643,9 @@ header img {
   position: fixed;
   top: 50px;
   right: 50px;
-  padding:20px;
-  background: #fafafa
+  padding:20px 20px 0px 20px;
+  background: #fafafa;
+  text-align: center;
 }
 
 .demo_title {
@@ -658,4 +659,15 @@ header img {
 #promotional_banner {
   background: white;
   height: 80px;
+}
+
+.fake_query{
+  padding: 5px;
+  margin: 15px;
+  background: salmon;
+  text-align: center;
+  font-size: 13px;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-weight: 400;
+  border-radius: 5px;
 }

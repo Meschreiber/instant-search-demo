@@ -355,19 +355,28 @@ function app(opts) {
       }
     })
   );
+  
+  // const fakeTyper = typer("#aa-search-input", search, 80);
+  
+  // document.getElementById("smartphone-query").addEventListener("click", function(e){
+  //   fakeTyper("smartphone");
+  // });
+
   search.start();
 }
 
 
 function typer (searchEl, isInstance, delay) {
   return function (query) {
+
     var split = query.split('');
     var i = 0;
     var built = '';
-    var $search = document.getElementById(searchEl);
-
+    var $search = $(searchEl);
+    console.log($search);
     var interval = setInterval(function() {
       built += split[i++];
+      $search.val(built)
       isInstance.helper.setQuery(built).search();
 
       if(built === query) {
@@ -377,7 +386,8 @@ function typer (searchEl, isInstance, delay) {
   }
 }
 
-const fakeTyper = typer("aa-search-input", search, 80);
+
+
 // ---------------------
 //
 //  Helper functions
