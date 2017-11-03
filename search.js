@@ -13,7 +13,35 @@ const latencyClient = algoliasearch(latencyAppId, latencyApiKey);
 const index = client.initIndex(indexName);
 const suggestionsIndex = latencyClient.initIndex('instantsearch_query_suggestions');
 
-app({ appId, apiKey, indexName });
+app({
+  appId,
+  apiKey,
+  indexName,
+  timeDelay: 500,
+  nbSuggestions: 5
+});
+
+// Click handlers for demo settings
+$("#timeSelect").change(function (e) {
+  app({
+    appId,
+    apiKey,
+    indexName,
+    timeDelay: e.target.value,
+    nbSuggestions: $("#nbSuggestionsSelect").val()
+  })
+});
+
+$("#nbSuggestionsSelect").change(function (e) {
+  app({
+    appId,
+    apiKey,
+    indexName,
+    timeDelay: $("#timeSelect").val(),
+    nbSuggestions: e.target.value
+  })
+});
+
 
 function app(opts) {
   const search = instantsearch({
@@ -58,11 +86,14 @@ function app(opts) {
       container: '#sort-by',
       autoHideContainer: true,
       indices: [{
-        name: opts.indexName, label: 'Most relevant',
+        name: opts.indexName,
+        label: 'Most relevant',
       }, {
-        name: `${opts.indexName}_price_asc`, label: 'Lowest price',
+        name: `${opts.indexName}_price_asc`,
+        label: 'Lowest price',
       }, {
-        name: `${opts.indexName}_price_desc`, label: 'Highest price',
+        name: `${opts.indexName}_price_desc`,
+        label: 'Highest price',
       }],
     })
   );
@@ -86,7 +117,8 @@ function app(opts) {
       attributes: [
         'hierarchicalCategories.lvl0',
         'hierarchicalCategories.lvl1',
-        'hierarchicalCategories.lvl2'],
+        'hierarchicalCategories.lvl2'
+      ],
       sortBy: ['isRefined', 'count:desc', 'name:asc'],
       showParentLevel: true,
       limit: 10,
@@ -220,12 +252,13 @@ function app(opts) {
       // Display promotional banners
       $("#free_promotional_banner").html("");
       $("#promotional_banner").remove();
+
       var userData = options.results._rawResults[0].userData;
       if (userData) {
         if (userData[0].free_ship_banner) {
           $("#free_promotional_banner").html('<img data-image="free-ship" class="img-banner" style="width:200px;" src="./assets/img/' + userData[0].free_ship_banner + '">')
         } else {
-          if($('#promotional_banner').length === 0); {
+          if ($('#promotional_banner').length === 0); {
             $('.aa-dropdown-menu').prepend(`<div id="promotional_banner">test</div>`)
             $("#promotional_banner").html('<img  data-image="samsung" class="img-banner" style="height:64px;" src="./assets/img/' + userData[0].samsung_banner + '"><img  data-image="apple" class="img-banner" style="height:64px;" src="./assets/img/' + userData[0].apple_banner + '">');
           }
@@ -251,30 +284,40 @@ function app(opts) {
   });
 
   function customMenuRenderFn(renderParams, isFirstRendering) {
-    var { container, placeholder, delayTime, nbSuggestions, suggestionTemplate } = renderParams.widgetParams;
+    var {
+      container,
+      placeholder,
+      delayTime,
+      nbSuggestions,
+      suggestionTemplate
+    } = renderParams.widgetParams;
     delayTime = delayTime ? delayTime : 600;
     nbSuggestions = nbSuggestions ? nbSuggestions : 5;
 
     if (isFirstRendering) {
+      if($('.algolia-autocomplete').length > 0){
+        $('.algolia-autocomplete').remove()
+      }
+
       $(container).append(
         `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
       );
 
-      autocomplete('#aa-search-input',
-        {
-          hint: false
-        }, [
-          {
-            source: autocomplete.sources.hits(suggestionsIndex, { hitsPerPage: nbSuggestions, restrictSearchableAttributes: ['query'] }),
-            displayKey: 'name',
-            templates: {
-              suggestion: suggestionTemplate
-            }
-          }
-        ]).on('autocomplete:selected', function (event, suggestion, dataset) {
-          $('#aa-search-input').val(suggestion.query);
-          renderParams.refine(suggestion.query);
-        });
+      autocomplete('#aa-search-input', {
+        hint: false
+      }, [{
+        source: autocomplete.sources.hits(suggestionsIndex, {
+          hitsPerPage: nbSuggestions,
+          restrictSearchableAttributes: ['query']
+        }),
+        displayKey: 'name',
+        templates: {
+          suggestion: suggestionTemplate
+        }
+      }]).on('autocomplete:selected', function (event, suggestion, dataset) {
+        $('#aa-search-input').val(suggestion.query);
+        renderParams.refine(suggestion.query);
+      });
 
       // This is the regular instantSearch update of results
       $(container).find('input').on('input', function (event) {
@@ -287,7 +330,9 @@ function app(opts) {
         }
 
         lastQueryUpdatedAt = now;
-        debounceTimer = setTimeout(function () { renderParams.refine(event.target.value); }, delayTime);
+        debounceTimer = setTimeout(function () {
+          renderParams.refine(event.target.value);
+        }, delayTime);
         // console.log("Setting timeout", debounceTimer);
         return false;
         // setTimeout(function () {
@@ -303,8 +348,8 @@ function app(opts) {
     keywordDropdown({
       container: '#aa-input-container',
       placeholder: 'Search for products by name, type, brand, ...',
-      delayTime: 600,
-      nbSuggestions: 5,
+      delayTime: opts.timeDelay,
+      nbSuggestions: opts.nbSuggestions,
       suggestionTemplate: function (suggestion, answer) {
         return '<div>' + suggestion._highlightResult.query.value + '</div>'
       }
@@ -346,7 +391,3 @@ function getStarsHTML(rating, maxRating) {
   }
   return html;
 }
-
-
-
-
