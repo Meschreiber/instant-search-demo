@@ -358,6 +358,26 @@ function app(opts) {
   search.start();
 }
 
+
+function typer (searchEl, isInstance, delay) {
+  return function (query) {
+    var split = query.split('');
+    var i = 0;
+    var built = '';
+    var $search = document.getElementById(searchEl);
+
+    var interval = setInterval(function() {
+      built += split[i++];
+      isInstance.helper.setQuery(built).search();
+
+      if(built === query) {
+        clearInterval(interval);
+      }
+    }, delay);
+  }
+}
+
+const fakeTyper = typer("aa-search-input", search, 80);
 // ---------------------
 //
 //  Helper functions
