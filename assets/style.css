@@ -514,7 +514,7 @@ footer a:hover {
 
 .aa-dropdown-menu {
   background-color: #fff;
-  border: 1px solid rgba(228, 228, 228, 0.6);
+  border: 1px solid #ed5565;
   width: 74%;
   margin-left: 26%;
   border: none;
@@ -528,8 +528,10 @@ footer a:hover {
 .aa-suggestion + .aa-suggestion {
     border-top: 1px solid rgba(228, 228, 228, 0.6);
 }
-  .aa-suggestion:hover, .aa-suggestion.aa-cursor {
-    background-color: rgba(241, 241, 241, 0.35); }
+
+.aa-suggestion:hover, .aa-suggestion.aa-cursor {
+    background-color: rgba(241, 241, 241, 0.35); 
+}
 
 .algolia-autocomplete {
   width: 100%;
@@ -542,15 +544,16 @@ footer a:hover {
 }
 .algolia-autocomplete .aa-dropdown-menu {
   background-color: #fff;
-  border: 1px solid #999;
+  border: 1px solid #ed5565;
   border-top: none;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
   cursor: pointer;
-  padding: 5px 4px;
+  padding: 15px 10px;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-  background-color: #B2D7FF;
+  background-color: salmon;
+  color: white;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
   font-weight: bold;
@@ -596,7 +599,8 @@ header img {
   margin-left: 26%;
   padding: 10px 0 6px;
   border: none;
-  border-bottom: 5px solid #eee;
+  border: 1px solid #eee;
+  padding: 10px;
 }
 #aa-input-container input, #aa-input-container input:focus {
   transition: border-color .3s ease-in;
@@ -610,6 +614,47 @@ header img {
   color: #999;
 }
 
+#bestshack {
+  margin-left: 37px;
+  margin-top: -9px;
+}
+
+#promotional_banner {
+  text-align: center;
+  margin: auto;
+}
+
 .img-banner {
-  padding: 0 65px 20px 65px;
+  padding: 0 50px 0 50px;
+  position: relative;
+  float: none;
+}
+
+
+#free_promotional_banner {
+  background: white;
+  text-align: center;
+}
+
+.demo_settings {
+  width: 150px;
+  bottom: inherit;
+  border: 1px solid #CCC;
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  padding:20px;
+}
+
+.demo_title {
+  margin: 20px 0 20px 0;
+}
+
+.demo_select {
+  padding-bottom: 20px;
+}
+
+#promotional_banner {
+  background: white;
+  height: 80px;
 }

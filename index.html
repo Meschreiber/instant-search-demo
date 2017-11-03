@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Playing with custom widgets</title>
+  <title>Autocomplete + Delayed Hits</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <!-- IE < 10 support -->
   <!--[if lte IE 9]>
@@ -20,7 +20,7 @@
 
   <!-- INTERFACE -->
   <header>
-    <a href="."><img src="./assets/img/instant_search_logo@2x.png"/></a>
+    <a href="."><img id ="bestshack" style="height:50px" src="./assets/img/bestshack.png"/></a>
     <div id="aa-input-container"></div>
     <!-- <div id="search-input-icon"></div> -->
   </header>
@@ -38,14 +38,40 @@
     </div>
 
     <div id="right-column">
-      <div id="promotional_banner" style="text-align: center;"></div>
+      <div id="free_promotional_banner" style="text-align: center;"></div>
       <div id="sort-by-wrapper"><span id="sort-by"></span></div>
       <div id="stats"></div>
       <div id="active-filters"></div>
       <div id="hits"></div>
       <div id="pagination"></div>
     </div>
+
+    <div class="demo_settings">
+      <div class="demo_select"><b>Demo Settings</b></div>
+      <div class="demo_select">
+        <span>Time delay:</span>
+        <select>
+                <option>0.4 sec</option>
+                <option>0.6 sec</option>
+                <option>0.8 sec</option>
+                <option>1.0 sec</option>
+                <option>1.2 sec</option> 
+              </select>
+      </div>
+      <div class="demo_select">
+        <span>Suggestions:</span>
+        <select>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>10</option> 
+            </select>
+      </div>
+    </div>
   </main>
+
+
 
   <footer>
     Source Code on <a href="https://github.com/algolia/examples/blob/master/instant-search/instantsearch.js">Github</a> -

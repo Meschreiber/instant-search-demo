@@ -218,14 +218,18 @@ function app(opts) {
     render: function (options) {
 
       // Display promotional banners
-      $("#promotional_banner").html("");
+      $("#free_promotional_banner").html("");
+      $("#promotional_banner").remove();
       var userData = options.results._rawResults[0].userData;
       if (userData) {
-        userData[0].free_ship_banner ?
-          $("#promotional_banner").html('<img data-image="free-ship" class="img-banner" style="width:200px;" src="./assets/img/' + userData[0].free_ship_banner + '">')
-          :
-          $("#promotional_banner").html('<img  data-image="samsung" class="img-banner" style="height:64px;" src="./assets/img/' + userData[0].samsung_banner + '"><img  data-image="apple" class="img-banner" style="height:64px;" src="./assets/img/' + userData[0].apple_banner + '">');
-
+        if (userData[0].free_ship_banner) {
+          $("#free_promotional_banner").html('<img data-image="free-ship" class="img-banner" style="width:200px;" src="./assets/img/' + userData[0].free_ship_banner + '">')
+        } else {
+          if($('#promotional_banner').length === 0); {
+            $('.aa-dropdown-menu').prepend(`<div id="promotional_banner">test</div>`)
+            $("#promotional_banner").html('<img  data-image="samsung" class="img-banner" style="height:64px;" src="./assets/img/' + userData[0].samsung_banner + '"><img  data-image="apple" class="img-banner" style="height:64px;" src="./assets/img/' + userData[0].apple_banner + '">');
+          }
+        }
         // click handlers for images
         $(".img-banner").click((e) => {
           const type = (e.target.src).slice(-7).slice(0, 3);
@@ -302,7 +306,7 @@ function app(opts) {
       delayTime: 600,
       nbSuggestions: 5,
       suggestionTemplate: function (suggestion, answer) {
-        return '<span>' + suggestion._highlightResult.query.value + '</span>'
+        return '<div>' + suggestion._highlightResult.query.value + '</div>'
       }
     })
   );
