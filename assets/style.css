@@ -675,8 +675,9 @@ header img {
 }
 
 .demo_select > input {
-  width: 60px;
+  width: 30px;
   margin: 5px 5px 0 5px;
+  text-align: right;
 }
 
 .demo_select > button {
