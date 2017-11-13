@@ -637,7 +637,7 @@ header img {
 }
 
 .demo_settings {
-  width: 150px;
+  width: 160px;
   bottom: inherit;
   border: 1px solid #CCC;
   position: fixed;
@@ -648,12 +648,10 @@ header img {
   text-align: center;
 }
 
-.demo_title {
-  margin: 20px 0 20px 0;
-}
-
 .demo_select {
   padding-bottom: 20px;
+  text-align: left;
+  font-size: 13px;
 }
 
 #promotional_banner {
@@ -670,4 +668,22 @@ header img {
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 400;
   border-radius: 5px;
+}
+
+.demo_select > select {
+  width: 60px;
+}
+
+.demo_select > input {
+  width: 60px;
+  margin: 5px 5px 0 5px;
+}
+
+.demo_select > button {
+  background-color: rgb(248, 248, 248);
+}
+
+.demo_title {
+  text-align: center;
+  font-size: 14px;
 }

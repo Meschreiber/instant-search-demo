@@ -42,6 +42,17 @@ $("#nbSuggestionsSelect").change(function (e) {
   })
 });
 
+$("#time-input-button").click(function (e) {
+  console.log($("#time-input").val()*1000)
+  app({
+    appId,
+    apiKey,
+    indexName,
+    timeDelay: $("#time-input").val()*1000,
+    nbSuggestions: e.target.value
+  })
+});
+
 
 function app(opts) {
   const search = instantsearch({
@@ -295,7 +306,7 @@ function app(opts) {
     nbSuggestions = nbSuggestions ? nbSuggestions : 5;
 
     if (isFirstRendering) {
-      if($('.algolia-autocomplete').length > 0){
+      if ($('.algolia-autocomplete').length > 0) {
         $('.algolia-autocomplete').remove()
       }
 
@@ -355,9 +366,9 @@ function app(opts) {
       }
     })
   );
-  
+
   // const fakeTyper = typer("#aa-search-input", search, 80);
-  
+
   // document.getElementById("smartphone-query").addEventListener("click", function(e){
   //   fakeTyper("smartphone");
   // });
@@ -366,7 +377,7 @@ function app(opts) {
 }
 
 
-function typer (searchEl, isInstance, delay) {
+function typer(searchEl, isInstance, delay) {
   return function (query) {
 
     var split = query.split('');
@@ -374,12 +385,12 @@ function typer (searchEl, isInstance, delay) {
     var built = '';
     var $search = $(searchEl);
     console.log($search);
-    var interval = setInterval(function() {
+    var interval = setInterval(function () {
       built += split[i++];
       $search.val(built)
       isInstance.helper.setQuery(built).search();
 
-      if(built === query) {
+      if (built === query) {
         clearInterval(interval);
       }
     }, delay);
@@ -421,3 +432,5 @@ function getStarsHTML(rating, maxRating) {
   }
   return html;
 }
+
+
