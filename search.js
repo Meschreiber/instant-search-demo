@@ -2,14 +2,14 @@
 
 const appId = '5NICTDJ5Q3';
 const apiKey = 'fe2708f4939640ae043e0a04008fbb10';
-const latencyAppId = 'latency';
-const latencyApiKey = '6be0576ff61c053d5f9a3225e2a90f76';
-const indexName = 'instant_search';
+// const latencyAppId = 'latency';
+// const latencyApiKey = '6be0576ff61c053d5f9a3225e2a90f76';
+// const latencyClient = algoliasearch(latencyAppId, latencyApiKey);
 
+const indexName = 'instant_search';
 const client = algoliasearch(appId, apiKey);
-const latencyClient = algoliasearch(latencyAppId, latencyApiKey);
 const index = client.initIndex(indexName);
-const suggestionsIndex = latencyClient.initIndex('instantsearch_query_suggestions');
+const suggestionsIndex = client.initIndex('prefix_query_suggestions');
 
 app({
   appId,
