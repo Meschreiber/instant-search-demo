@@ -29,14 +29,19 @@ Styling:
 ✅ padding around each item on the dropdown
 ✅ input element: remove thick border, 1px all around in grey, focus on red
 ✅  fake branding instead of 'instant search demo' (best buy knock off)
-- on autocomplete, include banners inside of dropdown (example query for 'smartphone')
+✅ on autocomplete, include banners inside of dropdown (example query for 'smartphone')
 
 Features:
-- Live input for delay time, for number of suggestions, number of columns -- css gridlayout? columns? --> might require a fixed height (might have to re-render all new instant search with param)
+✅ Live input for delay time, for number of suggestions, number of columns -- css gridlayout? columns? --> might require a fixed height (might have to re-render all new instant search with param)
 
 Bugs:
 - IS not checking the filter though the filter is selected through query rules (example query "apple")
 
+
+--------
+
+- Re-factor // clean
+- Come up with a better name 
 
 
 
