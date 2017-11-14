@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Autocomplete + Delayed Hits</title>
+  <title>Autocomplete / Almost InstantSearch</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <!-- IE < 10 support -->
   <!--[if lte IE 9]>
@@ -47,7 +47,10 @@
     </div>
 
     <div class="demo_settings">
-      <div class="demo_select demo_title" ><b>Demo Settings</b></div>
+      <div id="demo-header">
+        <div class="algolia-logo"></div>
+        <div class="demo_title"><b>Demo Settings</b></div>
+      </div>
       <div class="demo_select">
         <span>Time delay:</span>
         <select id="timeSelect">
@@ -59,9 +62,9 @@
               </select>
       </div>
       <div class="demo_select">
-          <span>Or enter a time delay:</span>
-          <input type="text" id="time-input"><span>sec</span>
-          <button id="time-input-button">Apply</button>
+        <span>or enter a time delay:</span>
+        <input type="text" id="time-input"><span>sec</span>
+        <button id="time-input-button">Apply</button>
       </div>
       <div class="demo_select">
         <span>Suggestions:</span>
@@ -73,21 +76,6 @@
               <option value="10">10</option> 
             </select>
       </div>
-      <!-- <div class="demo_select">
-        Promotional banners
-        <div class="fake_query" id="smartphone-query">
-          For brands
-        </div>
-        <div class="fake_query" id="free-shipping-query">
-          For free shipping
-        </div>
-      </div>
-      <div class="demo_select">
-          Automatic Facets
-          <div class="fake_query" id="apple-query">
-            For brands
-          </div>
-        </div> -->
     </div>
   </main>
 
@@ -129,6 +117,7 @@
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.2.0/dist/instantsearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
+  <script src="autocomplete-widget.js"></script>
   <script src="search.js"></script>
   <!-- /SCRIPTS -->
 

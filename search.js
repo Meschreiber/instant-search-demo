@@ -6,10 +6,8 @@ const latencyAppId = 'latency';
 const latencyApiKey = '6be0576ff61c053d5f9a3225e2a90f76';
 const indexName = 'instant_search';
 
-
 const client = algoliasearch(appId, apiKey);
 const latencyClient = algoliasearch(latencyAppId, latencyApiKey);
-
 const index = client.initIndex(indexName);
 const suggestionsIndex = latencyClient.initIndex('instantsearch_query_suggestions');
 
@@ -17,8 +15,6 @@ app({
   appId,
   apiKey,
   indexName,
-  timeDelay: 500,
-  nbSuggestions: 5
 });
 
 // Click handlers for demo settings
@@ -43,7 +39,6 @@ $("#nbSuggestionsSelect").change(function (e) {
 });
 
 $("#time-input-button").click(function (e) {
-  console.log($("#time-input").val()*1000)
   app({
     appId,
     apiKey,
@@ -294,67 +289,7 @@ function app(opts) {
     }
   });
 
-  function customMenuRenderFn(renderParams, isFirstRendering) {
-    var {
-      container,
-      placeholder,
-      delayTime,
-      nbSuggestions,
-      suggestionTemplate
-    } = renderParams.widgetParams;
-    delayTime = delayTime ? delayTime : 600;
-    nbSuggestions = nbSuggestions ? nbSuggestions : 5;
-
-    if (isFirstRendering) {
-      if ($('.algolia-autocomplete').length > 0) {
-        $('.algolia-autocomplete').remove()
-      }
-
-      $(container).append(
-        `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
-      );
-
-      autocomplete('#aa-search-input', {
-        hint: false
-      }, [{
-        source: autocomplete.sources.hits(suggestionsIndex, {
-          hitsPerPage: nbSuggestions,
-          restrictSearchableAttributes: ['query']
-        }),
-        displayKey: 'name',
-        templates: {
-          suggestion: suggestionTemplate
-        }
-      }]).on('autocomplete:selected', function (event, suggestion, dataset) {
-        $('#aa-search-input').val(suggestion.query);
-        renderParams.refine(suggestion.query);
-      });
-
-      // This is the regular instantSearch update of results
-      $(container).find('input').on('input', function (event) {
-        var lastQueryUpdatedAt = 0;
-        var debounceTimer = null;
-        var now = (new Date()).getTime();
-        if ((now - lastQueryUpdatedAt) < delayTime) {
-          // console.log("Clearing timeout");
-          clearTimeout(debounceTimer);
-        }
-
-        lastQueryUpdatedAt = now;
-        debounceTimer = setTimeout(function () {
-          renderParams.refine(event.target.value);
-        }, delayTime);
-        // console.log("Setting timeout", debounceTimer);
-        return false;
-        // setTimeout(function () {
-        //   renderParams.refine(event.target.value);
-        // }, delayTime);
-      });
-    }
-  }
-
   const keywordDropdown = instantsearch.connectors.connectSearchBox(customMenuRenderFn);
-
   search.addWidget(
     keywordDropdown({
       container: '#aa-input-container',
@@ -367,37 +302,8 @@ function app(opts) {
     })
   );
 
-  // const fakeTyper = typer("#aa-search-input", search, 80);
-
-  // document.getElementById("smartphone-query").addEventListener("click", function(e){
-  //   fakeTyper("smartphone");
-  // });
-
   search.start();
 }
-
-
-function typer(searchEl, isInstance, delay) {
-  return function (query) {
-
-    var split = query.split('');
-    var i = 0;
-    var built = '';
-    var $search = $(searchEl);
-    console.log($search);
-    var interval = setInterval(function () {
-      built += split[i++];
-      $search.val(built)
-      isInstance.helper.setQuery(built).search();
-
-      if (built === query) {
-        clearInterval(interval);
-      }
-    }, delay);
-  }
-}
-
-
 
 // ---------------------
 //
