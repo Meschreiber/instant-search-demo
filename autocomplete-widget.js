@@ -1,54 +1,64 @@
-function customMenuRenderFn(renderParams, isFirstRendering) {
-    var {
+function autocompleteRenderFn(renderParams, isFirstRendering) {
+  let {
       container,
-      placeholder,
-      delayTime,
-      nbSuggestions,
-      suggestionTemplate
+    placeholder,
+    delayTime,
+    nbSuggestions,
+    suggestionTemplate,
+    suggestionsIndex
     } = renderParams.widgetParams;
-    delayTime = delayTime ? delayTime : 500;
-    nbSuggestions = nbSuggestions ? nbSuggestions : 5;
 
-    if (isFirstRendering) {
-        // If the autocomplete exists from a previous run of app(), remove it
-      if ($('.algolia-autocomplete').length > 0) {
-        $('.algolia-autocomplete').remove()
+  delayTime = delayTime ? delayTime : 500;
+  nbSuggestions = nbSuggestions ? nbSuggestions : 5;
+
+
+
+  if (isFirstRendering) {
+
+    let $container = $(container);
+    let inputClass = `autocomplete-input-${Date.now()}`;
+
+    // If the autocomplete exists from a previous run of app(), remove it
+    if ($container.find('.algolia-autocomplete')) {
+      $container.find('.algolia-autocomplete').remove()
+    }
+
+    $container.append(
+      `<input type="search" class="${inputClass}" id="aa-search-input" placeholder="${placeholder}"/>`
+    );
+
+    autocomplete(`.${inputClass}`, {
+      hint: false
+    }, [{
+      source: autocomplete.sources.hits(suggestionsIndex, {
+        hitsPerPage: nbSuggestions,
+        restrictSearchableAttributes: ['query']
+      }),
+      displayKey: 'name',
+      templates: {
+        suggestion: suggestionTemplate
+      }
+    }]).on('autocomplete:selected', function (event, suggestion, dataset) {
+      $(`.${inputClass}`).val(suggestion.query);
+      renderParams.refine(suggestion.query);
+    });
+
+    // This is the regular instantSearch update of results
+    $container.find(`.${inputClass}`).on('input', function (event) {
+      var lastQueryUpdatedAt = 0;
+      var debounceTimer = null;
+      var now = Date.now();
+      
+      if ((now - lastQueryUpdatedAt) < delayTime) {
+        clearTimeout(debounceTimer);
       }
 
-      $(container).append(
-        `<input type="search" id="aa-search-input" placeholder="${placeholder}"/>`
-      );
+      lastQueryUpdatedAt = now;
+      debounceTimer = setTimeout(function () {
+        renderParams.refine(event.target.value);
+      }, delayTime);
 
-      autocomplete('#aa-search-input', {
-        hint: false
-      }, [{
-        source: autocomplete.sources.hits(suggestionsIndex, {
-          hitsPerPage: nbSuggestions,
-          restrictSearchableAttributes: ['query']
-        }),
-        displayKey: 'name',
-        templates: {
-          suggestion: suggestionTemplate
-        }
-      }]).on('autocomplete:selected', function (event, suggestion, dataset) {
-        $('#aa-search-input').val(suggestion.query);
-        renderParams.refine(suggestion.query);
-      });
-
-      // This is the regular instantSearch update of results
-      $(container).find('input').on('input', function (event) {
-        var lastQueryUpdatedAt = 0;
-        var debounceTimer = null;
-        var now = (new Date()).getTime();
-        if ((now - lastQueryUpdatedAt) < delayTime) {
-          clearTimeout(debounceTimer);
-        }
-
-        lastQueryUpdatedAt = now;
-        debounceTimer = setTimeout(function () {
-          renderParams.refine(event.target.value);
-        }, delayTime);
-        return false;
-      });
-    }
+      return false;
+    });
   }
+}

@@ -583,13 +583,14 @@ footer a:hover {
   padding: 0 50px 0 50px;
   position: relative;
   float: none;
+
 }
 
 #promotional_banner {
   text-align: center;
   margin: auto;
   background: white;
-  height: 80px;
+  height: 75px;
 }
 
 #free_promotional_banner {

@@ -84,7 +84,7 @@ var rules = [
                 }
             },
             userData: {
-                free_ship_banner: "shp.jpg"
+                free_shipping_banner: "shp.jpg"
             }
         },
         description: 'Filter for free-shipping and display banner'

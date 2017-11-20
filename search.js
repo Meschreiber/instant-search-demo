@@ -43,7 +43,7 @@ $("#time-input-button").click(function (e) {
     appId,
     apiKey,
     indexName,
-    timeDelay: $("#time-input").val()*1000,
+    timeDelay: $("#time-input").val() * 1000,
     nbSuggestions: e.target.value
   })
 });
@@ -252,53 +252,21 @@ function app(opts) {
   //
   // ---------------------
 
-  search.addWidget({
-    render: function (options) {
+  // Custom
+  search.addWidget(customBannerWidget);
 
-      // Display promotional banners
-      $("#free_promotional_banner").html("");
-      $("#promotional_banner").remove();
+  const autocompleteWidget = instantsearch.connectors.connectSearchBox(autocompleteRenderFn);
 
-      var userData = options.results._rawResults[0].userData;
-      if (userData) {
-        if (userData[0].free_ship_banner) {
-          $("#free_promotional_banner").html('<img data-image="free-ship" class="img-banner" style="width:200px;" src="./assets/img/' + userData[0].free_ship_banner + '">')
-        } else {
-          if ($('#promotional_banner').length === 0); {
-            $('.aa-dropdown-menu').prepend(`<div id="promotional_banner">test</div>`)
-            $("#promotional_banner").html('<img  data-image="samsung" class="img-banner" style="height:64px;" src="./assets/img/' + userData[0].samsung_banner + '"><img  data-image="apple" class="img-banner" style="height:64px;" src="./assets/img/' + userData[0].apple_banner + '">');
-          }
-        }
-        // click handlers for images
-        $(".img-banner").click((e) => {
-          const type = (e.target.src).slice(-7).slice(0, 3);
-          switch (type) {
-            case 'sam':
-              options.helper.setQuery('Samsung Galaxy Note 4 4G Cell Phone').search()
-              $('#aa-search-input').val('Samsung Galaxy Note 4');
-              break;
-            case 'iph':
-              options.helper.setQuery('iPhone 6 128GB').search()
-              $('#aa-search-input').val('iPhone 6 128GB');
-              break;
-            default:
-              break;
-          }
-        });
-      }
-    }
-  });
-
-  const keywordDropdown = instantsearch.connectors.connectSearchBox(customMenuRenderFn);
   search.addWidget(
-    keywordDropdown({
+    autocompleteWidget({
       container: '#aa-input-container',
       placeholder: 'Search for products by name, type, brand, ...',
       delayTime: opts.timeDelay,
       nbSuggestions: opts.nbSuggestions,
       suggestionTemplate: function (suggestion, answer) {
         return '<div>' + suggestion._highlightResult.query.value + '</div>'
-      }
+      },
+      suggestionsIndex
     })
   );
 
