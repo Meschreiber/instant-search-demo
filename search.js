@@ -58,8 +58,6 @@ function app(opts) {
     urlSync: true,
   });
 
-  let debounceTimer = null;
-
   // ---------------------
   //
   //  Default widgets

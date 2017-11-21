@@ -2,7 +2,7 @@ const customBannerWidget = {
     render: function (options) {
         $("#free_promotional_banner").remove();
         $("#promotional_banner").remove();
-        var userData = options.results._rawResults[0].userData;
+        const userData = options.results._rawResults[0].userData;
         if (userData) {
             if (userData[0].free_shipping_banner) {
                 let banner = $('<img data-image="free-shipping" class="img-banner" style="width:200px;">').attr('src', `./assets/img/${userData[0].free_shipping_banner}`);

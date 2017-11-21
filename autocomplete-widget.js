@@ -10,8 +10,6 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
 
   delayTime = delayTime ? delayTime : 500;
   nbSuggestions = nbSuggestions ? nbSuggestions : 5;
-  //debounceTimer = null;
-
 
   if (isFirstRendering) {
 
@@ -43,10 +41,12 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
       renderParams.refine(suggestion.query);
     });
 
+    let debounceTimer = null;
+    let lastQueryUpdatedAt = 0;
+
     // This is the regular instantSearch update of results
     $container.find(`.${inputClass}`).on('input', function (event) {
-      var lastQueryUpdatedAt = 0;
-      var now = Date.now();
+      const now = Date.now();
       
       if ((now - lastQueryUpdatedAt) < delayTime) {
       console.log("Clearing timeout");
