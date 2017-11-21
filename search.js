@@ -11,6 +11,7 @@ const client = algoliasearch(appId, apiKey);
 const index = client.initIndex(indexName);
 const suggestionsIndex = client.initIndex('prefix_query_suggestions');
 
+
 app({
   appId,
   apiKey,
@@ -56,6 +57,8 @@ function app(opts) {
     indexName: opts.indexName,
     urlSync: true,
   });
+
+  let debounceTimer = null;
 
   // ---------------------
   //

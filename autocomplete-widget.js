@@ -10,7 +10,7 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
 
   delayTime = delayTime ? delayTime : 500;
   nbSuggestions = nbSuggestions ? nbSuggestions : 5;
-  debounceTimer = null;
+  //debounceTimer = null;
 
 
   if (isFirstRendering) {
@@ -46,10 +46,10 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
     // This is the regular instantSearch update of results
     $container.find(`.${inputClass}`).on('input', function (event) {
       var lastQueryUpdatedAt = 0;
-
       var now = Date.now();
       
       if ((now - lastQueryUpdatedAt) < delayTime) {
+      // console.log("Clearing timeout");
         clearTimeout(debounceTimer);
       }
 
@@ -57,7 +57,7 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
       debounceTimer = setTimeout(function () {
         renderParams.refine(event.target.value);
       }, delayTime);
-
+      // console.log("Setting timeout", debounceTimer);
       return false;
     });
   }
