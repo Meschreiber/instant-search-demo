@@ -530,7 +530,7 @@ footer a:hover {
 }
 
 .aa-suggestion:hover, .aa-suggestion.aa-cursor {
-    background-color: rgba(241, 241, 241, 0.35); 
+    background-color: rgba(241, 241, 241, 0.35);
 }
 
 .algolia-autocomplete {
@@ -544,15 +544,18 @@ footer a:hover {
 }
 .algolia-autocomplete .aa-dropdown-menu {
   background-color: #fff;
-  border: 1px solid #ed5565;
+  border: 1px solid #b5b5b5;
+  box-shadow: 0 3px 0px rgba(0,0,0,0.14);
   border-top: none;
+  padding: 7px 0;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
   cursor: pointer;
-  padding: 15px 10px;
+  padding: 5px 10px;
+  border: 0;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-  background-color: salmon;
+  background-color: #484848;
   color: white;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
@@ -659,7 +662,7 @@ header img {
   height: 30px;
   width: 30px;
   background-repeat: no-repeat;
-  background-size: 30px 30px; 
+  background-size: 30px 30px;
   display: inline-block;
 }
 .demo_title {
