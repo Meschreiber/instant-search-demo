@@ -49,7 +49,7 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
       var now = Date.now();
       
       if ((now - lastQueryUpdatedAt) < delayTime) {
-      // console.log("Clearing timeout");
+      console.log("Clearing timeout");
         clearTimeout(debounceTimer);
       }
 
@@ -57,7 +57,7 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
       debounceTimer = setTimeout(function () {
         renderParams.refine(event.target.value);
       }, delayTime);
-      // console.log("Setting timeout", debounceTimer);
+      console.log("Setting timeout", debounceTimer);
       return false;
     });
   }
