@@ -17,9 +17,9 @@ I also included a few query rules, just for fun. 😊 Feel free to try them out.
 5) If a brand name is typed, filter on that brand
 
 ### Code
-[`autocomplete-widget.js`](autocomplete-widget.js) holds the function to be passed to the SearchBox connector to create the autocomplete widget.
-[`banner-widget.js`](banner-widget.js) holds the widget which displays promotional and free shipping banners
-[`config.js`](config.js) holds configurations for query rules and synonyms 
+- [`autocomplete-widget.js`](autocomplete-widget.js) holds the function to be passed to the SearchBox connector to create the autocomplete widget.
+- [`banner-widget.js`](banner-widget.js) holds the widget which displays promotional and free shipping banners
+- [`config.js`](config.js) holds configurations for query rules and synonyms 
 
 ### Known issues
 - [ ] The dropdown covers up the first hits. Originally I added additional padding to have those display the drop-down but I was advised to leave it as is. 
