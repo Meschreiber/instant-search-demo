@@ -1,15 +1,14 @@
 /* global instantsearch autocomplete */
 
-const appId = '5NICTDJ5Q3';
-const apiKey = 'fe2708f4939640ae043e0a04008fbb10';
-// const latencyAppId = 'latency';
-// const latencyApiKey = '6be0576ff61c053d5f9a3225e2a90f76';
-// const latencyClient = algoliasearch(latencyAppId, latencyApiKey);
-
-const indexName = 'instant_search';
-const client = algoliasearch(appId, apiKey);
-const index = client.initIndex(indexName);
-const suggestionsIndex = client.initIndex('prefix_query_suggestions');
+const appId = '5NICTDJ5Q3',
+apiKey = 'fe2708f4939640ae043e0a04008fbb10',
+// latencyAppId = 'latency',
+// latencyApiKey = '6be0576ff61c053d5f9a3225e2a90f76',
+// latencyClient = algoliasearch(latencyAppId, latencyApiKey),
+indexName = 'instant_search',
+client = algoliasearch(appId, apiKey),
+index = client.initIndex(indexName),
+suggestionsIndex = client.initIndex('prefix_query_suggestions');
 
 
 app({
@@ -255,6 +254,7 @@ function app(opts) {
 
   // Custom
   search.addWidget(customBannerWidget);
+  console.log('SEARCH', search);
 
   const autocompleteWidget = instantsearch.connectors.connectSearchBox(autocompleteRenderFn);
 
@@ -267,6 +267,7 @@ function app(opts) {
       suggestionTemplate: function (suggestion, answer) {
         return '<div>' + suggestion._highlightResult.query.value + '</div>'
       },
+      searchInstance: search,
       suggestionsIndex
     })
   );
@@ -280,10 +281,6 @@ function app(opts) {
 //
 // ---------------------
 
-function inputFillRefine(query) {
-  $('#aa-search-input').val(query);
-  renderParams.refine(query);
-}
 
 function getTemplate(templateName) {
   return document.querySelector(`#${templateName}-template`).innerHTML;
