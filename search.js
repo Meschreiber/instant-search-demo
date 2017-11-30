@@ -267,7 +267,7 @@ function app(opts) {
       suggestionTemplate: function (suggestion, answer) {
         return '<div>' + suggestion._highlightResult.query.value + '</div>'
       },
-      searchInstance: search,
+      // searchInstance: search,
       suggestionsIndex
     })
   );

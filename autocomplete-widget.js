@@ -6,7 +6,7 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
     nbSuggestions,
     suggestionTemplate,
     suggestionsIndex,
-    searchInstance
+    // searchInstance
     } = renderParams.widgetParams;
   delayTime = delayTime ? delayTime : 500;
   nbSuggestions = nbSuggestions ? nbSuggestions : 5;
@@ -29,20 +29,20 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
     autocomplete(`.${inputClass}`, {
       hint: false
     }, [{
-      // source: autocomplete.sources.hits(suggestionsIndex, {
-      //   hitsPerPage: nbSuggestions,
-      //   restrictSearchableAttributes: ['query']
-      // }),
-      source: function(query, callback) {
-        suggestionsIndex.search(query, { hitsPerPage: nbSuggestions + 1 })
-        .then(function(answer) {
-          // removes the current query from the suggested list
-          answer.hits = _.filter(answer.hits, function(hit){ return hit.query !== query.trim(); });
-          callback(answer.hits.slice(0, nbSuggestions));
-        }, function() {
-          callback([]);
-        });
-      },
+      source: autocomplete.sources.hits(suggestionsIndex, {
+        hitsPerPage: nbSuggestions,
+        restrictSearchableAttributes: ['query']
+      }),
+      // source: function(query, callback) {
+      //   suggestionsIndex.search(query, { hitsPerPage: nbSuggestions + 1 })
+      //   .then(function(answer) {
+      //     // removes the current query from the suggested list
+      //     answer.hits = _.filter(answer.hits, function(hit){ return hit.query !== query.trim(); });
+      //     callback(answer.hits.slice(0, nbSuggestions));
+      //   }, function() {
+      //     callback([]);
+      //   });
+      // },
       displayKey: function(suggestion) {
         return suggestion.query;
       },
@@ -52,8 +52,8 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
     }])
     .on('autocomplete:selected', function (event, suggestion, dataset) {
       $(`.${inputClass}`).val(suggestion.query);
-      // renderParams.refine(suggestion.query);
-      searchInstance.helper.setQuery(suggestion.query.trim()).search();
+      renderParams.refine(suggestion.query);
+      // searchInstance.helper.setQuery(suggestion.query.trim()).search();
     });
 
     let debounceTimer = null;
