@@ -1,4 +1,4 @@
-Instant-Search Demo Addition
+Query Suggestion + almost InstantSearch
 ====================
 
 A recent client asked us for an interesting UX: it was a combination of query suggestions and Instant Search, with a delay on the instant search results to limit the visual noise when people are looking at query suggestions.  Alex C. demoed it for them and I built something similar so that we could have a not-NSFW version 😉 to show other prospects/customers who might be interested in the same. I've built it on top of of our generic [BestBuy IS](https://github.com/algolia/instant-search-demo) with a custom widget.  You can find the demo [here](https://internal-preview.algolia.com/delayed-hits-demo/).
