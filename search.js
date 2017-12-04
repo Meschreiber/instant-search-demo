@@ -254,7 +254,6 @@ function app(opts) {
 
   // Custom
   search.addWidget(customBannerWidget);
-  console.log('SEARCH', search);
 
   const autocompleteWidget = instantsearch.connectors.connectSearchBox(autocompleteRenderFn);
 

@@ -525,6 +525,7 @@ footer a:hover {
   padding: 12px;
   cursor: pointer;
 }
+
 .aa-suggestion + .aa-suggestion {
     border-top: 1px solid rgba(228, 228, 228, 0.6);
 }
@@ -558,8 +559,13 @@ footer a:hover {
   background-color: #484848;
   color: white;
 }
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
   font-weight: bold;
+  font-style: normal;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -702,3 +708,4 @@ header img {
   font-weight: 400;
   border-radius: 5px;
 }
+
