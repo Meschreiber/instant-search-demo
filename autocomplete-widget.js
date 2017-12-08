@@ -7,7 +7,7 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
     suggestionTemplate,
     suggestionsIndex,
     // searchInstance
-    } = renderParams.widgetParams;
+  } = renderParams.widgetParams;
   delayTime = delayTime ? delayTime : 500;
   nbSuggestions = nbSuggestions ? nbSuggestions : 5;
 
@@ -43,32 +43,39 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
       //     callback([]);
       //   });
       // },
-      displayKey: function(suggestion) {
+      displayKey: function (suggestion) {
         return suggestion.query;
       },
       templates: {
         suggestion: suggestionTemplate
       }
     }])
-    .on('autocomplete:selected', function (event, suggestion, dataset) {
-      $(`.${inputClass}`).val(suggestion.query);
-      renderParams.refine(suggestion.query);
-      // searchInstance.helper.setQuery(suggestion.query.trim()).search();
-    })
-    .on('autocomplete:cursorchanged', function(event, suggestion, dataset) {
-      $(`.${inputClass}`).val(suggestion.query);
-      renderParams.refine(suggestion.query);
-    });
+      .on('autocomplete:selected', function (event, suggestion, dataset) {
+        $(`.${inputClass}`).val(suggestion.query);
+        renderParams.refine(suggestion.query);
+        // searchInstance.helper.setQuery(suggestion.query.trim()).search();
+      })
+      .on('autocomplete:cursorchanged', function (event, suggestion, dataset) {
+        $(`.${inputClass}`).val(suggestion.query);
+        renderParams.refine(suggestion.query);
+      });
 
     let debounceTimer = null;
     let lastQueryUpdatedAt = 0;
 
     // This is the regular instantSearch update of results
     $container.find(`.${inputClass}`).on('input', function (event) {
+
+      $(document).keypress(function (e) {
+        if (e.which == 13) {
+          $container.find('.aa-dropdown-menu').hide()
+        }
+      });
+
       const now = Date.now();
-      
+
       if ((now - lastQueryUpdatedAt) < delayTime) {
-      console.log("Clearing timeout");
+        console.log("Clearing timeout");
         clearTimeout(debounceTimer);
       }
 
