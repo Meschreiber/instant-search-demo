@@ -54,6 +54,10 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
       $(`.${inputClass}`).val(suggestion.query);
       renderParams.refine(suggestion.query);
       // searchInstance.helper.setQuery(suggestion.query.trim()).search();
+    })
+    .on('autocomplete:cursorchanged', function(event, suggestion, dataset) {
+      $(`.${inputClass}`).val(suggestion.query);
+      renderParams.refine(suggestion.query);
     });
 
     let debounceTimer = null;
