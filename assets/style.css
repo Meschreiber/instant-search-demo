@@ -85,7 +85,7 @@ main {
 
 .hit-content em {
   font-style: normal;
-  color: #ed5565;
+  color: #F79A75;
   border-bottom: solid 1px rgba(244, 107, 91, 0.5);
 }
 
@@ -144,8 +144,8 @@ main {
 }
 #pagination li.ais-pagination--item__active a {
   color: white;
-  border-color: #ed5565;
-  background: #ed5565;
+  border-color: #F79A75;
+  background: #F79A75;
 }
 #pagination li.ais-pagination--item__active a:hover {
   cursor: default;
@@ -282,13 +282,13 @@ main {
 .ais-menu--item__active .ais-menu--link,
 .ais-hierarchical-menu--list .facet-item.active:hover,
 .ais-hierarchical-menu--list .facet-item.active {
-  color: #ed5565;
+  color: #F79A75;
 }
 .ais-refinement-list--item__active .ais-refinement-list--label:hover,
 .ais-menu--item__active .ais-menu--link:hover,
 .ais-hierarchical-menu--list .facet-item.active:hover {
   text-decoration: line-through;
-  color: #ed5565;
+  color: #F79A75;
 }
 .ais-refinement-list--count,
 .ais-hierarchical-menu--count,
@@ -368,11 +368,11 @@ a.clear-all:hover {
 }
 
 .ais-range-slider--connect {
-  background: #ed5565;
+  background: #F79A75;
 }
 
 .ais-range-slider--handle {
-  border-color: #ed5565;
+  border-color: #F79A75;
 }
 
 .ais-body.ais-range-slider--body {
@@ -381,7 +381,7 @@ a.clear-all:hover {
 }
 
 .ais-range-slider .rheostat-horizontal .rheostat-progress {
-  background-color: #ed5565;
+  background-color: #F79A75;
   position: absolute;
   height: 6px;
   top: 1px;
@@ -494,11 +494,11 @@ footer {
 }
 footer a {
   text-decoration: none;
-  color: #ed5565;
+  color: #F79A75;
 }
 footer a:hover {
   text-decoration: underline;
-  color: #ed5565;
+  color: #F79A75;
 }
 
 /* AUTOCOMPLETE */
@@ -514,7 +514,7 @@ footer a:hover {
 
 .aa-dropdown-menu {
   background-color: #fff;
-  border: 1px solid #ed5565;
+  border: 1px solid #F79A75;
   width: 74%;
   margin-left: 26%;
   border: none;
@@ -635,7 +635,7 @@ header img {
   outline: 0;
 }
 #aa-input-container input:focus {
-  border-color: #ed5565;
+  border-color: #F79A75;
 }
 #aa-input-container input::-webkit-input-placeholder, #aa-input-container input:-moz-placeholder, #aa-input-container input:-moz-placeholder, #aa-input-container input:-ms-input-placeholder {
   font-weight: 100;
