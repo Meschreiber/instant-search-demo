@@ -63,12 +63,19 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
     let debounceTimer = null;
     let lastQueryUpdatedAt = 0;
 
+    // Attempt to gray out hits if suggestion dropdown exists
+    if ($('.aa-suggestion').length){  
+      console.log('DROPDOWN EXISTS');
+      $("main").addClass("grayout");
+    }
+
     // This is the regular instantSearch update of results
     $container.find(`.${inputClass}`).on('input', function (event) {
-
+      
       $(document).keypress(function (e) {
         if (e.which == 13) {
-          $container.find('.aa-dropdown-menu').hide()
+          $container.find('.aa-dropdown-menu').hide();
+          $("main").removeClass("grayout");
         }
       });
 

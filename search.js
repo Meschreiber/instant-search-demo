@@ -264,7 +264,7 @@ function app(opts) {
       delayTime: opts.timeDelay,
       nbSuggestions: opts.nbSuggestions,
       suggestionTemplate: function (suggestion, answer) {
-        return '<div>' + suggestion._highlightResult.query.value + '</div>'
+        return '<div class="suggestion">' + suggestion._highlightResult.query.value + '</div>'
       },
       // searchInstance: search,
       suggestionsIndex
