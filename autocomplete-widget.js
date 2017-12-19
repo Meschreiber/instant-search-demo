@@ -47,12 +47,18 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
         return suggestion.query;
       },
       templates: {
-        suggestion: suggestionTemplate
+        suggestion: suggestionTemplate,
+        // empty: function({ query, isEmpty }, hits){
+        //   console.log("query", query);
+        //   console.log("isEmpty", isEmpty);
+        //   console.log('EMPTY!', hits)
+        // }
       }
     }])
       .on('autocomplete:selected', function (event, suggestion, dataset) {
         $(`.${inputClass}`).val(suggestion.query);
         renderParams.refine(suggestion.query);
+        $("main").removeClass("grayout");
         // searchInstance.helper.setQuery(suggestion.query.trim()).search();
       })
       .on('autocomplete:cursorchanged', function (event, suggestion, dataset) {
@@ -64,20 +70,30 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
     let lastQueryUpdatedAt = 0;
 
     // Attempt to gray out hits if suggestion dropdown exists
-    if ($('.aa-suggestion').length){  
-      console.log('DROPDOWN EXISTS');
-      $("main").addClass("grayout");
-    }
+    // if ($('.aa-dataset-1').length){  
+    //   console.log('DROPDOWN EXISTS');
+    //   $("main").addClass("grayout");
+    // }
 
     // This is the regular instantSearch update of results
     $container.find(`.${inputClass}`).on('input', function (event) {
-      
+
       $(document).keypress(function (e) {
         if (e.which == 13) {
           $container.find('.aa-dropdown-menu').hide();
           $("main").removeClass("grayout");
+        } else {
+          if ($('.aa-suggestion').length) {
+            $("main").addClass("grayout");
+          }
         }
       });
+
+      // if ($('.aa-suggestion').length) {
+      //   $("main").addClass("grayout");
+      // } else {
+      //   $("main").removeClass("grayout");
+      // }
 
       const now = Date.now();
 
