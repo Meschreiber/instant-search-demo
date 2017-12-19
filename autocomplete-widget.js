@@ -69,12 +69,6 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
     let debounceTimer = null;
     let lastQueryUpdatedAt = 0;
 
-    // Attempt to gray out hits if suggestion dropdown exists
-    // if ($('.aa-dataset-1').length){  
-    //   console.log('DROPDOWN EXISTS');
-    //   $("main").addClass("grayout");
-    // }
-
     // This is the regular instantSearch update of results
     $container.find(`.${inputClass}`).on('input', function (event) {
 
@@ -109,5 +103,9 @@ function autocompleteRenderFn(renderParams, isFirstRendering) {
       console.log("Setting timeout", debounceTimer);
       return false;
     });
+  }
+  // Gray out hits if suggestion dropdown exists
+  if ($('.aa-dataset-1').find("span").length) {
+    $("main").addClass("grayout");
   }
 }
